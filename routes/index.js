@@ -1,4 +1,4 @@
-const express = require('express')
+const express = require('express');
 
 const v1Routes = require('./v1/index.js');
 

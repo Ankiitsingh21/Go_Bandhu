@@ -1,0 +1,12 @@
+# Ignore build directories
+build/
+dist/
+node_modules/
+
+# Ignore specific files
+*.min.js
+*.min.css
+
+# IDE-specific files
+.vscode/
+.idea/
