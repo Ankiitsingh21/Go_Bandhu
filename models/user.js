@@ -38,8 +38,8 @@ userSchema.methods.comparePassword = function compare(password) {
 };
 
 userSchema.methods.genJWT = function generate() {
-  return jwt.sign({ id: this._id, email: this.email }, JWT_KEY, {
-    expiresIn: '1h',
+  return jwt.sign({ id: this._id, email: this.email ,role:this.roles}, JWT_KEY, {
+    expiresIn: '2d',
   });
 };
 
