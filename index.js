@@ -2,7 +2,7 @@ const express = require('express');
 const { connect } = require('./config/database.js');
 const bodyParser = require('body-parser');
 const apiRoutes = require('./routes/index.js');
-const { PORT } = require('./config/serverConfig.js');
+const  {PORT}  = require('./config/serverConfig.js');
 
 
 const app=express();
