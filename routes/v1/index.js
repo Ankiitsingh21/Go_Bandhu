@@ -7,11 +7,14 @@ const {
   validateUserAuthLogin,
   verifyToken,
 } = require('../../middlewares/auth-requestvalidator.js');
-const { createProfile, updateProfile } = require('../../controller/profile-controller.js');
+const {
+  createProfile,
+  updateProfile,
+} = require('../../controller/profile-controller.js');
 
 router.post('/SignUp', validateUserAuth, signUp, createProfile);
 
-router.post('/updateProfile',verifyToken,updateProfile);
+router.post('/updateProfile', verifyToken, updateProfile);
 
 router.post('/Login', validateUserAuthLogin, signIn);
 

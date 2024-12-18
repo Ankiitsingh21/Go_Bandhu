@@ -30,7 +30,7 @@ const updateProfile = async (req, res) => {
     // const { userId } = req.params;
     const updateData = req.body;
     // console.log(req.user.id);
-    const userId=req.user.id;
+    const userId = req.user.id;
     // console.log(userId)
     const updatedProfile = await profileService.updateProfile(
       userId,
@@ -53,8 +53,6 @@ const updateProfile = async (req, res) => {
     });
   }
 };
-
-
 
 module.exports = {
   createProfile,
