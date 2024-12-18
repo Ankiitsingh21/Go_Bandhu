@@ -19,6 +19,7 @@ class UserService {
 
   async getUserByemail(email) {
     try {
+      // console.log(email)
       const user = await this.userRepository.findByEmail({ email });
       return user;
     } catch (error) {
@@ -29,27 +30,24 @@ class UserService {
 
   async signIn(data) {
     try {
+      // console.log("In the user service layer "+data.email);
+      // console.log("In the user service layer "+data.password);
       const user = await this.getUserByemail(data.email);
       if (!user) {
-        throw {
-          message: 'no user found',
-          success: false,
-        };
+        throw new Error('No user found');
       }
-      if (user.roles == 'Admin') {
-        console.log('This user is Admin');
-      }
+      // if (user.roles == 'Admin') {
+      //   console.log('This user is Admin');
+      // }
       if (!user.comparePassword(data.password)) {
-        throw {
-          message: 'Incorrect password',
-          success: false,
-        };
+        throw new Error('Incorrect password');
       }
       const token = user.genJWT();
+      // console.log(token);
       return token;
     } catch (error) {
       console.log('Something went wrong in the Service Layer');
-      console.log(error);
+      throw error;
     }
   }
 }

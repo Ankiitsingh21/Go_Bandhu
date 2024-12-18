@@ -6,9 +6,10 @@ const { SALT, JWT_KEY } = require('../config/serverConfig');
 const rolesEnum = ['Admin', 'User', 'SuperAdmin', 'variable'];
 
 const userSchema = new mongoose.Schema({
-  name: {
-    type: String,
+  number: {
+    type: Number,
     required: true,
+    unique: true,
   },
   email: {
     type: String,
@@ -38,9 +39,13 @@ userSchema.methods.comparePassword = function compare(password) {
 };
 
 userSchema.methods.genJWT = function generate() {
-  return jwt.sign({ id: this._id, email: this.email ,role:this.roles}, JWT_KEY, {
-    expiresIn: '2d',
-  });
+  return jwt.sign(
+    { id: this._id, email: this.email, role: this.roles },
+    JWT_KEY,
+    {
+      expiresIn: '2d',
+    }
+  );
 };
 
 const User = mongoose.model('User', userSchema);

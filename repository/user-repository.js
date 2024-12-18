@@ -1,25 +1,18 @@
 const User = require('../models/user.js');
+const { CrudRepository } = require('./crud-repository.js');
 
-class UserRepository {
-  async create(data) {
-    try {
-      const user = await User.create(data);
-      return user;
-    } catch (error) {
-      console.log('Something went wrong in the repository layer');
-      console.log(error);
-      return error;
-    }
+class UserRepository extends CrudRepository {
+  constructor() {
+    super(User);
   }
 
-  async findByEmail({ email }) {
+  async getLatestUser() {
     try {
-      const user = await User.findOne({ email });
-      //     console.log(user);
-      return user;
+      const latestUser = await this.model.findOne().sort({ _id: -1 });
+      return latestUser ? latestUser._id : null;
     } catch (error) {
-      console.log('Something went wrong in the repository layer', error);
-      throw error; // Rethrow error for better debugging
+      console.error('Error fetching the latest user:', error);
+      throw error;
     }
   }
 }

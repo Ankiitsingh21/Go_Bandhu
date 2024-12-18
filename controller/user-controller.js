@@ -2,19 +2,21 @@ const UserService = require('../services/user-service.js');
 
 const userService = new UserService();
 
-const signUp = async (req, res) => {
+const signUp = async (req, res, next) => {
   try {
     const user = await userService.signUp({
       email: req.body.email,
       password: req.body.password,
-      name: req.body.name,
+      number: req.body.number,
     });
-    return res.status(200).json({
-      success: 'True',
-      message: 'Succesfully created a new user',
-      data: user,
-      err: {},
-    });
+    req.userId = user._id;
+    next();
+    // return res.status(200).json({
+    //   success: 'True',
+    //   message: 'Succesfully created a new user',
+    //   data: user,
+    //   err: {},
+    // });
   } catch (error) {
     console.log(error);
     return res.status(500).json({
@@ -28,6 +30,8 @@ const signUp = async (req, res) => {
 
 const signIn = async (req, res) => {
   try {
+    // console.log("In the controller layer "+req.body.email);
+    // console.log("In the controller layer "+req.body.password);
     const user = await userService.signIn({
       email: req.body.email,
       password: req.body.password,
@@ -44,7 +48,7 @@ const signIn = async (req, res) => {
       success: 'false',
       message: 'Not able to Login',
       data: {},
-      err: error,
+      err: error.message,
     });
   }
 };
