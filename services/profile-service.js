@@ -13,7 +13,6 @@ class ProfileService {
       if (!user) {
         throw new Error('User not found');
       }
-
       const profileData = {
         userId: user._id,
         email: user.email,
@@ -34,7 +33,13 @@ class ProfileService {
       if (!profile) {
         throw new Error('Profile not found');
       }
-      return await this.profileRepository.update(profile._id, updateData);
+      if(!updateData.email){
+        return await this.profileRepository.update(profile._id, updateData);
+      }else{
+        const email = updateData.email
+        const user = await this.userRepository.update(userId,email);
+        return await this.profileRepository.update(profile._id, updateData);
+      }
     } catch (error) {
       console.log('Something went wrong in ProfileService', error);
       throw error;
