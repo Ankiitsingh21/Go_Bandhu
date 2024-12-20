@@ -3,29 +3,32 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { SALT, JWT_KEY } = require('../config/serverConfig');
 
-const rolesEnum = ['Admin', 'User', 'SuperAdmin', 'variable'];
+const rolesEnum = ['ADMIN', 'USER', 'SUPERADMIN', 'VARIABLE'];
 
-const userSchema = new mongoose.Schema({
-  number: {
-    type: Number,
-    required: true,
-    unique: true,
+const userSchema = new mongoose.Schema(
+  {
+    number: {
+      type: Number,
+      required: true,
+      unique: true,
+    },
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    password: {
+      type: String,
+      required: true,
+    },
+    roles: {
+      type: String,
+      enum: rolesEnum,
+      default: 'USER',
+    },
   },
-  email: {
-    type: String,
-    required: true,
-    unique: true,
-  },
-  password: {
-    type: String,
-    required: true,
-  },
-  roles: {
-    type: String,
-    enum: rolesEnum,
-    default: 'User',
-  },
-});
+  { timestamps: true }
+);
 
 userSchema.pre('save', function (next) {
   const user = this;

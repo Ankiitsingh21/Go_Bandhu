@@ -6,13 +6,18 @@ class UserRepository extends CrudRepository {
     super(User);
   }
 
-  async getLatestUser() {
+  async isAdmin(userId) {
     try {
-      const latestUser = await this.model.findOne().sort({ _id: -1 });
-      return latestUser ? latestUser._id : null;
+      const user = await User.findByPk(userId);
+      const adminRole = await Role.findOne({
+        where: {
+          name: 'ADMIN',
+        },
+      });
+      return user.hasRole(adminRole);
     } catch (error) {
-      console.error('Error fetching the latest user:', error);
-      throw error;
+      console.log('Something went wrong on the repository layer');
+      throw { error };
     }
   }
 }

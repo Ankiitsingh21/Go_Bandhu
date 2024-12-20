@@ -67,8 +67,21 @@ const verifyToken = (req, res, next) => {
   }
 };
 
+const validateIsAdminRequest = (req, res, next) => {
+  if (!req.body.id) {
+    return res.status(400).json({
+      succes: false,
+      data: {},
+      err: 'UserId not given',
+      message: 'something went wrong',
+    });
+  }
+  next();
+};
+
 module.exports = {
   validateUserAuth,
   validateUserAuthLogin,
   verifyToken,
+  validateIsAdminRequest,
 };
