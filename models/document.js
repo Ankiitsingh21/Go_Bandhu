@@ -7,10 +7,6 @@ const documentSchema = new mongoose.Schema(
       required: true,
       unique: true,
     },
-    neccessaryDetailsToAsk: {
-      type: String,
-      default: null,
-    },
   },
   { timestamps: true }
 );

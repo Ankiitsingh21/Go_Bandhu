@@ -9,17 +9,24 @@ class ProfileService {
 
   async createProfileFromUser(userId) {
     try {
-      const user = await this.userRepository.findById(userId);
-      if (!user) {
+      // console.log(userId);
+      const users = await this.userRepository.findById(userId); // returns an array
+      console.log('Fetched user:', users);
+  
+      if (!users || users.length === 0) {
         throw new Error('User not found');
       }
-      const profileData = {
+  
+      // Access the first user in the array
+      const user = users[0];
+      console.log(user);
+      const profileData = [{
         userId: user._id,
         email: user.email,
         number: user.number,
         password: user.password,
-      };
-
+      }];
+      console.log('Profile data to be created:', profileData);
       return await this.profileRepository.create(profileData);
     } catch (error) {
       console.log('Something went wrong in ProfileService', error);

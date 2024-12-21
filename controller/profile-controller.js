@@ -12,12 +12,12 @@ const createProfile = async (req, res) => {
       err: {},
     });
   } catch (error) {
-    console.error('Error in ProfileController:', error);
+    // console.error('Error in ProfileController:', error);
     return res.status(500).json({
       success: false,
       message: 'Unable to create profile',
       data: {},
-      err: error.message,
+      err: error,
     });
   }
 };

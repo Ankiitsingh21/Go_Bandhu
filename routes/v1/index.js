@@ -21,9 +21,9 @@ const {
 
 router.post('/SignUp', validateUserAuth, signUp, createProfile);
 
-router.post('/updateProfile', verifyToken, updateProfile);
-
 router.post('/Login', validateUserAuthLogin, signIn);
+
+router.post('/updateProfile', verifyToken, updateProfile);
 
 router.post('/addNewDocument', addNewDocument);
 
