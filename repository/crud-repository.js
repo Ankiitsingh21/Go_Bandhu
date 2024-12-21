@@ -5,9 +5,9 @@ class CrudRepository {
 
   async create(data) {
     try {
-      console.log("in the repository layer "+data);
+      // console.log("in the repository layer "+data);
       const result = await this.model.create(data);
-      console.log("result"+result);
+      // console.log("result"+result);
       return result;
     } catch (error) {
       console.log('Something went wrong in the repository layer');
@@ -61,9 +61,9 @@ class CrudRepository {
 
   async findById(id) {
     try {
-      // console.log(id);
+      console.log(id);
       const result = await this.model.find({ _id: id });
-      // console.log(result);
+      console.log(result);
       return result;
     } catch (error) {
       console.log('Something went wrong in the repository layer');

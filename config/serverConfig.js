@@ -7,5 +7,5 @@ module.exports = {
   PORT: process.env.PORT,
   SALT: bcrypt.genSaltSync(10),
   JWT_KEY: process.env.JWT_KEY,
-  FAST2SMSAPI_key : process.env.FAST2SMSAPI_key
+  FAST2SMSAPI_key: process.env.FAST2SMSAPI_key,
 };

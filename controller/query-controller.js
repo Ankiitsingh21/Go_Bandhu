@@ -1,10 +1,18 @@
+const { text } = require('body-parser');
 const QueryService = require('../services/query-service');
 
 const queryService = new QueryService();
 
 const raiseProblem = async (req, res) => {
   try {
-    const response = await queryService.raiseProblem(req.body);
+    // console.log(req.user);
+    // console.log(req.body);
+    const response = await queryService.raiseProblem({
+      userId: req.user.id,
+      documentId: req.body.documentId,
+      text: req.body.text,
+      assistanceType: req.body.assistanceType,
+    });
     return res.status(201).json({
       success: true,
       message: 'Query raised successfully',
@@ -24,7 +32,7 @@ const raiseProblem = async (req, res) => {
 
 const getQueryByUserId = async (req, res) => {
   try {
-    const userId = req.body.userId;
+    const userId = req.user.id;
     const response = await queryService.getQueryByUserId(userId);
     return res.status(201).json({
       success: true,
@@ -37,6 +45,27 @@ const getQueryByUserId = async (req, res) => {
     return res.status(500).json({
       success: false,
       message: 'Unable to fetch  Query by userid',
+      data: {},
+      err: error,
+    });
+  }
+};
+
+const getStatusOfQuery = async (req, res) => {
+  try {
+    const queryId = req.body.queryId;
+    const response = await queryService.getStatusByQueryId(queryId);
+    return res.status(201).json({
+      success: true,
+      message: 'successfully fetched Status by queryid',
+      data: response,
+      err: {},
+    });
+  } catch (error) {
+    console.error('Error in QueryController:', error);
+    return res.status(500).json({
+      success: false,
+      message: 'Unable to fetch  Status by Queryid',
       data: {},
       err: error,
     });
@@ -69,7 +98,7 @@ const changeSatus = async (req, res) => {
   try {
     const queryId = req.body.queryId;
     const updateData = req.body;
-    console.log(updateData);
+    // console.log(updateData);
     const response = await queryService.update(queryId, updateData);
     return res.status(201).json({
       success: true,
@@ -93,4 +122,5 @@ module.exports = {
   getQueryByUserId,
   getQueryByQueryId,
   changeSatus,
+  getStatusOfQuery,
 };

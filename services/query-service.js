@@ -14,13 +14,18 @@ class QueryService extends CrudService {
 
   async raiseProblem(data) {
     try {
+      // console.log(data);
+      // const userId = req.user.id;
       const { userId, text, assistanceType, documentId } = data;
       const profile = await this.profileRepository.findByUserId(userId);
       if (!profile) {
         console.error(`Profile not found for userId: ${userId}`);
         throw new Error('Profile not found');
       }
-      const document = await this.documentRepository.findById(documentId);
+      // console.log(documentId);
+      const document =
+        await this.documentRepository.findByDocumentId(documentId);
+      console.log(document);
       if (!document) {
         console.error(`Document not found for documentId: ${documentId}`);
         throw new Error('Document not found');
@@ -59,6 +64,17 @@ class QueryService extends CrudService {
     } catch (error) {
       console.log('Something went wrong in Query Service', error);
       throw error;
+    }
+  }
+
+  async getStatusByQueryId(id) {
+    try {
+      // console.log(id);
+      const response = await this.queryRepository.getStatusOfQuery(id);
+      return response;
+    } catch (error) {
+      console.log('something went wrong on Crud service layer');
+      throw { error };
     }
   }
 }

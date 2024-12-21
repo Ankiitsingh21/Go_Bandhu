@@ -5,7 +5,7 @@ class CrudService {
 
   async create(data) {
     try {
-      console.log("in the seervice layer "+data);
+      // console.log("in the seervice layer "+data);
       const response = await this.repository.create(data);
       return response;
     } catch (error) {

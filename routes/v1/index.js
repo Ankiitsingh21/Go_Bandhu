@@ -11,12 +11,16 @@ const {
   createProfile,
   updateProfile,
 } = require('../../controller/profile-controller.js');
-const { addNewDocument } = require('../../controller/document-controller.js');
+const {
+  addNewDocument,
+  getAllDocument,
+} = require('../../controller/document-controller.js');
 const {
   raiseProblem,
   getQueryByUserId,
   getQueryByQueryId,
   changeSatus,
+  getStatusOfQuery,
 } = require('../../controller/query-controller.js');
 
 router.post('/SignUp', validateUserAuth, signUp, createProfile);
@@ -25,14 +29,18 @@ router.post('/Login', validateUserAuthLogin, signIn);
 
 router.post('/updateProfile', verifyToken, updateProfile);
 
-router.post('/addNewDocument', addNewDocument);
+// router.post('/addNewDocument', addNewDocument);
 
-router.get('/fetchQueryByUserId', getQueryByUserId);
+router.get('/getAllDocument', getAllDocument);
+
+router.post('/raiseproblem', verifyToken, raiseProblem);
+
+router.get('/fetchQueryByUserId', verifyToken, getQueryByUserId);
 
 router.get('/fetchQueryByQueryId', getQueryByQueryId);
 
-router.post('/changeStatus', changeSatus);
+router.get('/getStatusOfQuery', getStatusOfQuery);
 
-router.post('/raiseproblem', raiseProblem);
+router.post('/changeStatus', changeSatus);
 
 module.exports = router;

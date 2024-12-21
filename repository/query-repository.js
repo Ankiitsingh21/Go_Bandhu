@@ -16,6 +16,20 @@ class QueryRepository extends CrudRepository {
       throw error;
     }
   }
+
+  async getStatusOfQuery(id) {
+    try {
+      // console.log(id);
+      const result = await this.model.find({ _id: id });
+      const res = result[0];
+      // console.log(res.status);
+      return res.status;
+    } catch (error) {
+      console.log('Something went wrong in the repository layer');
+      console.log(error);
+      throw { error };
+    }
+  }
 }
 
 module.exports = {
