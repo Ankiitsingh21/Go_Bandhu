@@ -25,11 +25,9 @@ class CrudRepository {
 
   async update(id, data) {
     try {
-      const result = await this.model.findOneAndUpdate(
-        { _id: id }, 
-        data, 
-        { new: true }
-      );      
+      const result = await this.model.findOneAndUpdate({ _id: id }, data, {
+        new: true,
+      });
       return result;
     } catch (error) {
       console.log('Something went wrong in the repository layer');
@@ -62,7 +60,7 @@ class CrudRepository {
   async findById(id) {
     try {
       // console.log(id);
-      const result = await this.model.findOne({ _id: id });
+      const result = await this.model.find({ _id: id });
       // console.log(result);
       return result;
     } catch (error) {

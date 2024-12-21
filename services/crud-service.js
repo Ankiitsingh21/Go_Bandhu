@@ -23,9 +23,10 @@ class CrudService {
     }
   }
 
-  async get(id) {
+  async getById(id) {
     try {
-      const response = await this.repository.get(id);
+      // console.log(id);
+      const response = await this.repository.findById(id);
       return response;
     } catch (error) {
       console.log('something went wrong on Crud service layer');

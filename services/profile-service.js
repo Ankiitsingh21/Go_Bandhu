@@ -33,11 +33,11 @@ class ProfileService {
       if (!profile) {
         throw new Error('Profile not found');
       }
-      if(!updateData.email){
+      if (!updateData.email) {
         return await this.profileRepository.update(profile._id, updateData);
-      }else{
-        const email = updateData.email
-        const user = await this.userRepository.update(userId,email);
+      } else {
+        const email = updateData.email;
+        const user = await this.userRepository.update(userId, email);
         return await this.profileRepository.update(profile._id, updateData);
       }
     } catch (error) {

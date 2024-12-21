@@ -28,7 +28,9 @@ class QueryService extends CrudService {
       const { number, name: userName, address, city } = profile;
       const { name: documentName } = document;
       if (!userName || !address || !city) {
-        console.error(`Missing required profile fields: userName, address, or city`);
+        console.error(
+          `Missing required profile fields: userName, address, or city`
+        );
         throw new Error('Profile is missing required fields');
       }
       const response = await this.queryRepository.create({
@@ -47,6 +49,15 @@ class QueryService extends CrudService {
     } catch (error) {
       console.log(error);
       console.error('Error creating query:', error.message);
+      throw error;
+    }
+  }
+
+  async getQueryByUserId(userId) {
+    try {
+      return await this.queryRepository.findByUserId(userId);
+    } catch (error) {
+      console.log('Something went wrong in Query Service', error);
       throw error;
     }
   }

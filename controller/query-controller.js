@@ -22,6 +22,75 @@ const raiseProblem = async (req, res) => {
   }
 };
 
+const getQueryByUserId = async (req, res) => {
+  try {
+    const userId = req.body.userId;
+    const response = await queryService.getQueryByUserId(userId);
+    return res.status(201).json({
+      success: true,
+      message: 'successfully fetched query by userid',
+      data: response,
+      err: {},
+    });
+  } catch (error) {
+    console.error('Error in QueryController:', error);
+    return res.status(500).json({
+      success: false,
+      message: 'Unable to fetch  Query by userid',
+      data: {},
+      err: error,
+    });
+  }
+};
+
+const getQueryByQueryId = async (req, res) => {
+  try {
+    const queryId = req.body.queryId;
+    // console.log(queryId);
+    const response = await queryService.getById(queryId);
+    return res.status(201).json({
+      success: true,
+      message: 'successfully fetched query by queryid',
+      data: response,
+      err: {},
+    });
+  } catch (error) {
+    console.error('Error in QueryController:', error);
+    return res.status(500).json({
+      success: false,
+      message: 'Unable to fetch  Query by Queryid',
+      data: {},
+      err: error,
+    });
+  }
+};
+
+const changeSatus = async (req, res) => {
+  try {
+    const queryId = req.body.queryId;
+    const updateData = req.body;
+    console.log(updateData);
+    const response = await queryService.update(queryId, updateData);
+    return res.status(201).json({
+      success: true,
+      message: 'successfully changed status by Queryid',
+      data: response,
+      err: {},
+    });
+  } catch (error) {
+    console.error('Error in QueryController:', error);
+    return res.status(500).json({
+      success: false,
+      message: 'Unable to change   status of Query',
+      data: {},
+      err: error,
+    });
+  }
+};
+
 module.exports = {
   raiseProblem,
+  getQueryByUserId,
+  getQueryByQueryId,
+  changeSatus,
 };

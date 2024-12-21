@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 
-// Define status options as constants
 const Status = ['Submitted', 'InProgress', 'Call', 'Resolved'];
 
 const AssistanceType = ['Physical', 'Virtual'];
