@@ -25,9 +25,16 @@ const {
 
 router.post('/SignUp', validateUserAuth, signUp, createProfile);
 
+// field --> mobileVerified : boolean == > default false
+
+// route to mAKE IT TRUE 
+
 router.post('/Login', validateUserAuthLogin, signIn);
 
 router.post('/updateProfile', verifyToken, updateProfile);
+
+// get profile 
+
 
 // router.post('/addNewDocument', addNewDocument);
 
@@ -43,4 +50,7 @@ router.get('/getStatusOfQuery', getStatusOfQuery);
 
 router.post('/changeStatus', changeSatus);
 
+// send otp
+
+// verify otp 
 module.exports = router;
