@@ -10,6 +10,7 @@ const {
 const {
   createProfile,
   updateProfile,
+  getProfile,
 } = require('../../controller/profile-controller.js');
 const {
   addNewDocument,
@@ -28,6 +29,8 @@ router.post('/SignUp', validateUserAuth, signUp, createProfile);
 router.post('/Login', validateUserAuthLogin, signIn);
 
 router.post('/updateProfile', verifyToken, updateProfile);
+
+router.get('/getProfile', verifyToken, getProfile);
 
 // router.post('/addNewDocument', addNewDocument);
 

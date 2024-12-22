@@ -10,7 +10,7 @@ class ProfileRepository extends CrudRepository {
     try {
       // const response = await Profile.findOne({userId});
       // console.log("hiii heloo   "+response);
-      return await Profile.findOne({ userId });
+      return await Profile.find({ userId });
     } catch (error) {
       console.log('Something went wrong in ProfileRepository', error);
       throw error;

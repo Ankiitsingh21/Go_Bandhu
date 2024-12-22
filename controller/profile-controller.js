@@ -53,7 +53,7 @@ const updateProfile = async (req, res) => {
 
 const getProfile = async (req, res) => {
   try {
-    const { userId } = req.params;
+    const userId = req.user.id;
 
     const profile = await profileService.getProfileByUserId(userId);
 

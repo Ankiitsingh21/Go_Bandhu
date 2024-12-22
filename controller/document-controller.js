@@ -4,7 +4,7 @@ const documentService = new DocumentService();
 
 const addNewDocument = async (req, res) => {
   try {
-    console.log('req.body ' + req.body.name);
+    // console.log('req.body ' + req.body.name);
     const response = await documentService.create({
       name: req.body.name,
       // neccessaryDetailsToAsk: req.body.details,
