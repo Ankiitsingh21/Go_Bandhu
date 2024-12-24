@@ -26,20 +26,11 @@ const {
 
 router.post('/SignUp', validateUserAuth, signUp, createProfile);
 
-// field --> mobileVerified : boolean == > default false
-
-// route to mAKE IT TRUE 
-
 router.post('/Login', validateUserAuthLogin, signIn);
 
 router.post('/updateProfile', verifyToken, updateProfile);
 
-<<<<<<< HEAD
 router.get('/getProfile', verifyToken, getProfile);
-=======
-// get profile 
-
->>>>>>> 78e048b2daf948b4ca72e54f06bd0aa94c53b308
 
 // router.post('/addNewDocument', addNewDocument);
 
@@ -55,7 +46,4 @@ router.get('/getStatusOfQuery', getStatusOfQuery);
 
 router.post('/changeStatus', changeSatus);
 
-// send otp
-
-// verify otp 
 module.exports = router;
