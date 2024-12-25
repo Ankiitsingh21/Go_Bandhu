@@ -49,6 +49,19 @@ class CrudRepository {
     }
   }
 
+  async findByNumber({ number }) {
+    try {
+      // console.log("email = "+email);
+      // console.log('number = ' + number);
+      const user = await this.model.findOne({ number });
+      // console.log("result = "+user);
+      return user;
+    } catch (error) {
+      console.log('Something went wrong in the repository layer ', error);
+      throw { error };
+    }
+  }
+
   async getAll() {
     try {
       const result = await this.model.find({});
@@ -61,9 +74,9 @@ class CrudRepository {
 
   async findById(id) {
     try {
-      console.log(id);
+      // console.log(id);
       const result = await this.model.find({ _id: id });
-      console.log(result);
+      // console.log(result);
       return result;
     } catch (error) {
       console.log('Something went wrong in the repository layer');

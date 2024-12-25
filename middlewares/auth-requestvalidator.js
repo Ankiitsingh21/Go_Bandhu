@@ -2,24 +2,24 @@ const jwt = require('jsonwebtoken');
 const { JWT_KEY } = require('../config/serverConfig');
 
 const validateUserAuth = (req, res, next) => {
-  if (!req.body.email || !req.body.password || !req.body.number) {
+  if ( !req.body.number) {
     return res.status(400).json({
       success: false,
       data: {},
       message: 'Something went wrong',
-      err: 'Email or password or name  is missing in the signup request',
+      err: 'number  is missing in the signup request',
     });
   }
   next();
 };
 
 const validateUserAuthLogin = (req, res, next) => {
-  if (!req.body.email || !req.body.password) {
+  if (!req.body.number) {
     return res.status(400).json({
       success: false,
       data: {},
       message: 'Something went wrong',
-      err: 'Email or password  is missing in the signup request',
+      err: 'Number  is missing in the signup request',
     });
   }
   next();

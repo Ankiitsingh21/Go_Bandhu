@@ -17,10 +17,10 @@ class UserService {
     }
   }
 
-  async getUserByemail(email) {
+  async getUserByNumber(number) {
     try {
       // console.log(email)
-      const user = await this.userRepository.findByEmail({ email });
+      const user = await this.userRepository.findByNumber({ number });
       return user;
     } catch (error) {
       console.log('Something went wrong on the service Layer', error);
@@ -30,18 +30,19 @@ class UserService {
 
   async signIn(data) {
     try {
-      // console.log("In the user service layer "+data.email);
+      // console.log("In the user service layer "+data.number);
+      const number = data.number;
       // console.log("In the user service layer "+data.password);
-      const user = await this.getUserByemail(data.email);
+      const user = await this.userRepository.findByNumber({number});
       if (!user) {
         throw new Error('No user found');
       }
       // if (user.roles == 'Admin') {
       //   console.log('This user is Admin');
       // }
-      if (!user.comparePassword(data.password)) {
-        throw new Error('Incorrect password');
-      }
+      // if (!user.comparePassword(data.password)) {
+      //   throw new Error('Incorrect password');
+      // }
       const token = user.genJWT();
       // console.log(token);
       return token;

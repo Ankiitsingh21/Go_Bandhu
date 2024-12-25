@@ -5,8 +5,6 @@ const userService = new UserService();
 const signUp = async (req, res, next) => {
   try {
     const user = await userService.signUp({
-      email: req.body.email,
-      password: req.body.password,
       number: req.body.number,
     });
     req.userId = user._id;
@@ -30,11 +28,10 @@ const signUp = async (req, res, next) => {
 
 const signIn = async (req, res) => {
   try {
-    // console.log("In the controller layer "+req.body.email);
+    // console.log("In the controller layer "+req.body.number);
     // console.log("In the controller layer "+req.body.password);
     const user = await userService.signIn({
-      email: req.body.email,
-      password: req.body.password,
+      number:req.body.number
     });
     return res.status(200).json({
       success: 'True',

@@ -25,22 +25,17 @@ const {
 } = require('../../controller/query-controller.js');
 const { sendOtp, verifyOtp } = require('../../controller/otpController.js');
 
-router.post('/SignUp', validateUserAuth, signUp, createProfile);
-
-// field --> mobileVerified : boolean == > default false
-
-// route to mAKE IT TRUE 
+router.post('/SignUp', validateUserAuth, signUp, createProfile); 
 
 router.post('/Login', validateUserAuthLogin, signIn);
 
 router.post('/updateProfile', verifyToken, updateProfile);
-// get profile 
 
 router.get('/getProfile', verifyToken, getProfile);
 
 // router.post('/addNewDocument', addNewDocument);
 
-router.get('/getAllDocument', getAllDocument);
+// router.get('/getAllDocument', getAllDocument);
 
 router.post('/raiseproblem', verifyToken, raiseProblem);
 

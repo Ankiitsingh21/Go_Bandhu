@@ -11,15 +11,12 @@ const userSchema = new mongoose.Schema(
       type: Number,
       required: true,
       unique: true,
-    },
-    email: {
-      type: String,
-      required: true,
-      unique: true,
-    },
-    password: {
-      type: String,
-      required: true,
+      validate: {
+        validator: function (v) {
+          return v.toString().length === 10; // Ensure the number is exactly 10 digits
+        },
+        message: (props) => `${props.value} is not a valid 10-digit number!`,
+      },
     },
     roles: {
       type: String,
@@ -30,12 +27,6 @@ const userSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-userSchema.pre('save', function (next) {
-  const user = this;
-  const encryptedpassword = bcrypt.hashSync(user.password, SALT);
-  user.password = encryptedpassword;
-  next();
-});
 
 userSchema.methods.comparePassword = function compare(password) {
   return bcrypt.compareSync(password, this.password);
