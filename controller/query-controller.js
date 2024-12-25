@@ -97,7 +97,7 @@ const getQueryByQueryId = async (req, res) => {
 const changeSatus = async (req, res) => {
   try {
     const queryId = req.body.queryId;
-    const updateData = req.body;
+    const updateData = req.body.change;
     // console.log(updateData);
     const response = await queryService.update(queryId, updateData);
     return res.status(201).json({

@@ -8,9 +8,9 @@ class DocumentRepository extends CrudRepository {
 
   async findByDocumentId(id) {
     try {
-      console.log(id);
+      // console.log(id);
       const result = await this.model.findOne({ _id: id });
-      console.log(result);
+      // console.log(result);
       return result;
     } catch (error) {
       console.log('Something went wrong in the repository layer');

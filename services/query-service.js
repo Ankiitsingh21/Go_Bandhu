@@ -17,19 +17,20 @@ class QueryService extends CrudService {
       // console.log(data);
       // const userId = req.user.id;
       const { userId, text, assistanceType, documentId } = data;
-      const profile = await this.profileRepository.findByUserId(userId);
-      if (!profile) {
+      const profiles = await this.profileRepository.findByUserId(userId);
+      if (!profiles || profiles.length === 0) {
         console.error(`Profile not found for userId: ${userId}`);
         throw new Error('Profile not found');
       }
       // console.log(documentId);
       const document =
         await this.documentRepository.findByDocumentId(documentId);
-      console.log(document);
+      // console.log(document);
       if (!document) {
         console.error(`Document not found for documentId: ${documentId}`);
         throw new Error('Document not found');
       }
+      const profile = profiles[0];
       const { number, name: userName, address, city } = profile;
       const { name: documentName } = document;
       if (!userName || !address || !city) {
