@@ -27,9 +27,12 @@ class CrudRepository {
 
   async update(id, data) {
     try {
+      // console.log('id = ' + id);
+      // console.log('data = ' + data);
       const result = await this.model.findOneAndUpdate({ _id: id }, data, {
         new: true,
       });
+      // console.log(result);
       return result;
     } catch (error) {
       console.log('Something went wrong in the repository layer');

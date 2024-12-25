@@ -29,6 +29,7 @@ const updateProfile = async (req, res) => {
     // console.log(req.user.id);
     const userId = req.user.id;
     // console.log(userId)
+    // console.log(updateData);
     const updatedProfile = await profileService.updateProfile(
       userId,
       updateData
