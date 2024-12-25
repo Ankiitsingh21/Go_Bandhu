@@ -33,7 +33,7 @@ class UserService {
       // console.log("In the user service layer "+data.number);
       const number = data.number;
       // console.log("In the user service layer "+data.password);
-      const user = await this.userRepository.findByNumber({number});
+      const user = await this.userRepository.findByNumber({ number });
       if (!user) {
         throw new Error('No user found');
       }

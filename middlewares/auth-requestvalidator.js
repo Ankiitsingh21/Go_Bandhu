@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 const { JWT_KEY } = require('../config/serverConfig');
 
 const validateUserAuth = (req, res, next) => {
-  if ( !req.body.number) {
+  if (!req.body.number) {
     return res.status(400).json({
       success: false,
       data: {},

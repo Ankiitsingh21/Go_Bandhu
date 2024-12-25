@@ -25,7 +25,7 @@ const {
 } = require('../../controller/query-controller.js');
 const { sendOtp, verifyOtp } = require('../../controller/otpController.js');
 
-router.post('/SignUp', validateUserAuth, signUp, createProfile); 
+router.post('/SignUp', validateUserAuth, signUp, createProfile);
 
 router.post('/Login', validateUserAuthLogin, signIn);
 
@@ -52,5 +52,5 @@ router.post('/verify-otp', verifyOtp);
 
 // send otp
 
-// verify otp 
+// verify otp
 module.exports = router;

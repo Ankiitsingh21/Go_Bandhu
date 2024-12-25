@@ -27,7 +27,6 @@ const userSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-
 userSchema.methods.comparePassword = function compare(password) {
   return bcrypt.compareSync(password, this.password);
 };

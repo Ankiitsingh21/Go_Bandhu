@@ -31,7 +31,7 @@ const signIn = async (req, res) => {
     // console.log("In the controller layer "+req.body.number);
     // console.log("In the controller layer "+req.body.password);
     const user = await userService.signIn({
-      number:req.body.number
+      number: req.body.number,
     });
     return res.status(200).json({
       success: 'True',
