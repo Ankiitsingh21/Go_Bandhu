@@ -33,9 +33,9 @@ router.post('/updateProfile', verifyToken, updateProfile);
 
 router.get('/getProfile', verifyToken, getProfile);
 
-// router.post('/addNewDocument', addNewDocument);
+router.post('/addNewDocument', addNewDocument);
 
-// router.get('/getAllDocument', getAllDocument);
+router.get('/getAllDocument', getAllDocument);
 
 router.post('/raiseproblem', verifyToken, raiseProblem);
 
