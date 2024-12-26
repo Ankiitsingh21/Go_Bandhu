@@ -97,13 +97,31 @@ const getQueryByQueryId = async (req, res) => {
 
 const changeSatus = async (req, res) => {
   try {
-    const queryId = req.body.queryId;
-    const updateData = req.body.change;
-    // console.log(updateData);
-    const response = await queryService.update(queryId, updateData);
-    return res.status(201).json({
+    const { queryId, status } = req.body;
+
+    if (!queryId || !status) {
+      return res.status(400).json({
+        success: false,
+        message: 'queryId and status are required',
+        data: {},
+        err: {},
+      });
+    }
+
+    const response = await queryService.update(queryId, { status });
+
+    if (!response) {
+      return res.status(404).json({
+        success: false,
+        message: 'Query not found',
+        data: {},
+        err: {},
+      });
+    }
+
+    return res.status(200).json({
       success: true,
-      message: 'successfully changed status by Queryid',
+      message: 'Successfully changed status by queryId',
       data: response,
       err: {},
     });
@@ -111,7 +129,7 @@ const changeSatus = async (req, res) => {
     console.error('Error in QueryController:', error);
     return res.status(500).json({
       success: false,
-      message: 'Unable to change   status of Query',
+      message: 'Unable to change status of Query',
       data: {},
       err: error,
     });
