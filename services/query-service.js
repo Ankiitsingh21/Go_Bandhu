@@ -16,7 +16,7 @@ class QueryService extends CrudService {
     try {
       // console.log(data);
       // const userId = req.user.id;
-      const { userId, text, assistanceType, documentId } = data;
+      const { userId, text, assistanceType, documentId, address } = data;
       const profiles = await this.profileRepository.findByUserId(userId);
       if (!profiles || profiles.length === 0) {
         console.error(`Profile not found for userId: ${userId}`);
@@ -31,9 +31,9 @@ class QueryService extends CrudService {
         throw new Error('Document not found');
       }
       const profile = profiles[0];
-      const { number, name: userName, address, city } = profile;
+      const { number, name: userName, city } = profile;
       const { name: documentName } = document;
-      if (!userName || !address || !city) {
+      if (!userName || !city) {
         console.error(
           `Missing required profile fields: userName, address, or city`
         );

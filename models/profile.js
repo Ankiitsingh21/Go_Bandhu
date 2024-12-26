@@ -15,10 +15,6 @@ const profileSchema = new mongoose.Schema(
       type: String,
       default: null,
     },
-    address: {
-      type: String,
-      default: null,
-    },
     number: {
       type: Number,
       required: true,

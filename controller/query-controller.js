@@ -12,6 +12,7 @@ const raiseProblem = async (req, res) => {
       documentId: req.body.documentId,
       text: req.body.text,
       assistanceType: req.body.assistanceType,
+      address: req.body.address,
     });
     return res.status(201).json({
       success: true,

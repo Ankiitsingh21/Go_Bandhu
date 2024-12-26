@@ -51,6 +51,10 @@ const querySchema = new mongoose.Schema(
       enum: AssistanceType,
       required: true,
     },
+    address: {
+      type: String,
+      default: null,
+    },
   },
   { timestamps: true }
 );
