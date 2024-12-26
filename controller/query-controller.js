@@ -33,7 +33,7 @@ const raiseProblem = async (req, res) => {
 
 const getQueryByUserId = async (req, res) => {
   try {
-    const userId = req.query.userId;
+    const userId = req.params.userId;
     const response = await queryService.getQueryByUserId(userId);
     return res.status(201).json({
       success: true,
@@ -54,7 +54,7 @@ const getQueryByUserId = async (req, res) => {
 
 const getStatusOfQuery = async (req, res) => {
   try {
-    const queryId = req.query.queryId;
+    const queryId = req.params.queryId;
     // console.log(queryId);
     const response = await queryService.getStatusByQueryId(queryId);
     return res.status(201).json({
@@ -76,7 +76,7 @@ const getStatusOfQuery = async (req, res) => {
 
 const getQueryByQueryId = async (req, res) => {
   try {
-    const queryId = req.query.queryId;
+    const queryId = req.params.queryId;
     // console.log(queryId);
     const response = await queryService.getById(queryId);
     return res.status(201).json({

@@ -29,9 +29,9 @@ router.post('/SignUp', validateUserAuth, signUp, createProfile);
 
 router.post('/Login', validateUserAuthLogin, signIn);
 
-router.post('/updateProfile', verifyToken, updateProfile);
+router.post('/updateProfile/userId/:userId', verifyToken, updateProfile);
 
-router.get('/getProfile', verifyToken, getProfile);
+router.get('/getProfile/userId/:userId', verifyToken, getProfile);
 
 // router.post('/addNewDocument', addNewDocument);
 
@@ -39,11 +39,11 @@ router.get('/getAllDocument', getAllDocument);
 
 router.post('/raiseproblem', verifyToken, raiseProblem);
 
-router.get('/fetchQueryByUserId', verifyToken, getQueryByUserId);
+router.get('/fetchQueryByUserId/userId/:userId', verifyToken, getQueryByUserId);
 
-router.get('/fetchQueryByQueryId', getQueryByQueryId);
+router.get('/fetchQueryByQueryId/queryId/:queryId', getQueryByQueryId);
 
-router.get('/getStatusOfQuery', getStatusOfQuery);
+router.get('/getStatusOfQuery/queryId/:queryId', getStatusOfQuery);
 
 router.post('/changeStatus', changeSatus);
 
