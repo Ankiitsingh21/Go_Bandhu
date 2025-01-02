@@ -18,8 +18,8 @@ client.connect().catch((err) => console.error('Redis connection error:', err));
 
 const sendOtp = async (req, res) => {
   try {
-    console.log(process.env.SMS_API_URL);
-    console.log(process.env.SMS_API_KEY);
+    // console.log(process.env.SMS_API_URL);
+    // console.log(process.env.SMS_API_KEY);
     const { mobileNumber } = req.body;
     if (!mobileNumber) {
       return res.status(400).json({

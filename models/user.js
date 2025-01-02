@@ -13,7 +13,7 @@ const userSchema = new mongoose.Schema(
       unique: true,
       validate: {
         validator: function (v) {
-          return v.toString().length === 10; // Ensure the number is exactly 10 digits
+          return v.toString().length === 10;
         },
         message: (props) => `${props.value} is not a valid 10-digit number!`,
       },
@@ -36,7 +36,7 @@ userSchema.methods.genJWT = function generate() {
     { id: this._id, email: this.email, role: this.roles },
     JWT_KEY,
     {
-      expiresIn: '2d',
+      expiresIn: '25d',
     }
   );
 };
