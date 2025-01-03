@@ -1,5 +1,5 @@
-const ProfileRepository = require('../repository/profile-repository');
-const { UserRepository } = require('../repository/user-repository');
+const ProfileRepository = require('../repositories/profile-repository');
+const { UserRepository } = require('../repositories/user-repository');
 
 class ProfileService {
   constructor() {

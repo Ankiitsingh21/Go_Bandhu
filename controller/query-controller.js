@@ -98,7 +98,7 @@ const getQueryByQueryId = async (req, res) => {
 
 const changeSatus = async (req, res) => {
   try {
-    const queryId = req.query.queryId;
+    const queryId = req.params.queryId;
     const { status } = req.body;
 
     if (!queryId || !status) {
@@ -146,6 +146,15 @@ const getQueryBYCityAndDocumentId = async (req,res)=>{
     const documentId = req.params.documentId; 
     // console.log(city,documentId);
     const response = await queryService.getQueryByCityAndDocumentId(city,documentId);
+    // console.log(response);
+    if(response.length === 0){
+      return res.status(201).json({
+        success: true,
+        message: 'No Query found',
+        data: {},
+        err: {},
+      });
+    }
     return res.status(201).json({
       success: true,
       message: 'successfully fetched query by city and documentId',

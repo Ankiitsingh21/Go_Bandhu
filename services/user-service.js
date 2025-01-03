@@ -1,4 +1,4 @@
-const { UserRepository } = require('../repository/user-repository');
+const { UserRepository } = require('../repositories/user-repository');
 
 class UserService {
   constructor() {

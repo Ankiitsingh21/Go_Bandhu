@@ -7,7 +7,6 @@ const {
   validateUserAuthLogin,
   verifyToken,
   validateAgentAuth,
-  verifyAgentToken,
 } = require('../../middlewares/auth-requestvalidator.js');
 const {
   createProfile,
@@ -28,6 +27,7 @@ const {
 } = require('../../controller/query-controller.js');
 const { sendOtp, verifyOtp } = require('../../controller/otpController.js');
 const { addNewAgent, agentSignIn } = require('../../controller/agent-controller.js');
+const { accept, reject } = require('../../controller/problemSolving-controller.js');
 
 router.post('/SignUp', validateUserAuth, signUp, createProfile);
 
@@ -35,11 +35,11 @@ router.post('/addNewAgent',validateAgentAuth,addNewAgent);
 
 router.post('/agentLogin', validateUserAuthLogin, agentSignIn);
 
-router.get(
-  '/getQueries/city/:cityName/documentId/:documentId',
-  verifyToken,
-  getQueryBYCityAndDocumentId
-);
+router.get('/getQueries/city/:cityName/documentId/:documentId',verifyToken,getQueryBYCityAndDocumentId);
+
+router.post('/accept',verifyToken,accept);
+
+router.post('/reject',verifyToken,reject);
 
 router.post('/Login', validateUserAuthLogin, signIn);
 

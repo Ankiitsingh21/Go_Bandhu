@@ -1,5 +1,5 @@
-const AgentRepository = require('../repository/agent-repository');
-const { CrudRepository } = require('../repository/crud-repository');
+const AgentRepository = require('../repositories/agent-repository');
+const { CrudRepository } = require('../repositories/crud-repository');
 
 class AgentService extends CrudRepository{
         constructor(){

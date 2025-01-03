@@ -34,7 +34,8 @@ class QueryRepository extends CrudRepository {
    async getQueryByCityAndDocumentId(city, documentId) {
     try {
       // console.log(city,documentId);
-      const query = {};
+      const query = {status: 'Submitted'};
+      // const query= {};
       if (city) query.city = new RegExp(`^${city}$`, 'i');
       if (documentId) query.documentId = { $in: [documentId] };
       // console.log("passing query = ",query);

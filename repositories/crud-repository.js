@@ -26,6 +26,9 @@ class CrudRepository {
   }
 
   async update(id, data) {
+    if (!id || !data) {
+      throw new Error('ID and data are required for updating the query.');
+    }
     try {
       // console.log('id = ' + id);
       // console.log('data = ' + data);

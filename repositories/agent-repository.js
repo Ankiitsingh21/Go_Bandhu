@@ -10,7 +10,7 @@ class AgentRepository extends CrudRepository{
         try {
           // console.log("email = "+email);
           // console.log('number = ' + number);
-          const user = await this.model.findOne({ number });
+          const user = await Agent.findOne({ number });
           // console.log("result = "+user);
           return user;
         } catch (error) {

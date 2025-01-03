@@ -1,6 +1,6 @@
-const ProfileRepository = require('../repository/profile-repository');
-const DocumentRepository = require('../repository/document-repository');
-const { QueryRepository } = require('../repository/query-repository');
+const ProfileRepository = require('../repositories/profile-repository');
+const DocumentRepository = require('../repositories/document-repository');
+const { QueryRepository } = require('../repositories/query-repository');
 const CrudService = require('./crud-service');
 
 class QueryService extends CrudService {
