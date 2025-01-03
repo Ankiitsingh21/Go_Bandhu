@@ -78,6 +78,17 @@ class QueryService extends CrudService {
       throw { error };
     }
   }
+  
+  async getQueryByCityAndDocumentId(city, documentId)  {
+    try {
+      // console.log(city,documentId);
+      const response = await this.queryRepository.getQueryByCityAndDocumentId(city, documentId);
+      return response;
+    } catch (error) {
+      console.error('Error in getQueryByCityAndDocumentId service:', error);
+      throw error;
+    }
+  };
 }
 
 module.exports = QueryService;

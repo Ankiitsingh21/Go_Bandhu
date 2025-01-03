@@ -138,10 +138,35 @@ const changeSatus = async (req, res) => {
   }
 };
 
+
+const getQueryBYCityAndDocumentId = async (req,res)=>{
+  try{
+    const city = req.city;
+    const documentId = req.documentId;
+    // console.log(city,documentId);
+    const response = await queryService.getQueryByCityAndDocumentId(city,documentId);
+    return res.status(201).json({
+      success: true,
+      message: 'successfully fetched query by city and documentId',
+      data: response,
+      err: {},
+    });
+  }catch (error) {
+    console.error('Error in QueryController:', error);
+    return res.status(500).json({
+      success: false,
+      message: 'Unable to fetch  Query by city and documentId',
+      data: {},
+      err: error,
+    });
+  }
+}
+
 module.exports = {
   raiseProblem,
   getQueryByUserId,
   getQueryByQueryId,
   changeSatus,
   getStatusOfQuery,
+  getQueryBYCityAndDocumentId
 };
