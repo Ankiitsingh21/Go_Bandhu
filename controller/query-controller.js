@@ -141,8 +141,9 @@ const changeSatus = async (req, res) => {
 
 const getQueryBYCityAndDocumentId = async (req,res)=>{
   try{
-    const city = req.city;
-    const documentId = req.documentId;
+    // console.log("hellow", req.params);
+    const city = req.params.cityName; 
+    const documentId = req.params.documentId; 
     // console.log(city,documentId);
     const response = await queryService.getQueryByCityAndDocumentId(city,documentId);
     return res.status(201).json({

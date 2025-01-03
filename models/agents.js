@@ -42,7 +42,7 @@ const agentSchema = new mongoose.Schema(
 
 agentSchema.methods.genJWT = function generate() {
         return jwt.sign(
-          { id: this._id, number:this.number , city:this.city, documentId:this.documentId,},
+          { id: this._id, number:this.number },
           JWT_KEY,
           {
             expiresIn: '25d',

@@ -35,7 +35,11 @@ router.post('/addNewAgent',validateAgentAuth,addNewAgent);
 
 router.post('/agentLogin', validateUserAuthLogin, agentSignIn);
 
-router.get('/getQueries', verifyAgentToken,getQueryBYCityAndDocumentId );
+router.get(
+  '/getQueries/city/:cityName/documentId/:documentId',
+  verifyToken,
+  getQueryBYCityAndDocumentId
+);
 
 router.post('/Login', validateUserAuthLogin, signIn);
 
