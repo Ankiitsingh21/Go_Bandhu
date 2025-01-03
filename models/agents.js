@@ -1,13 +1,13 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
-const { SALT, JWT_KEY } = require('../config/serverConfig');
-
+const { JWT_KEY } = require('../config/serverConfig');
 
 const agentSchema = new mongoose.Schema(
   {
     name: {
       type: String,
       required: true,
+      unique: true,
     },
     number: {
       type: Number,
@@ -15,7 +15,7 @@ const agentSchema = new mongoose.Schema(
     },
     documentId: {
       type: [mongoose.Schema.Types.ObjectId],
-      ref: "Document",
+      ref: 'Document',
       required: true,
     },
     city: {
@@ -28,28 +28,23 @@ const agentSchema = new mongoose.Schema(
     },
     status: {
       type: String,
-      enum: ["accept", "reject", "pending"],
-      default: "pending",
+      enum: ['accept', 'reject', 'pending'],
+      default: 'pending',
     },
     address: {
       type: String,
       required: true,
     },
   },
-  { timestamps: true },
+  { timestamps: true }
 );
 
-
 agentSchema.methods.genJWT = function generate() {
-        return jwt.sign(
-          { id: this._id, number:this.number },
-          JWT_KEY,
-          {
-            expiresIn: '25d',
-          }
-        );
-      };
+  return jwt.sign({ id: this._id, number: this.number }, JWT_KEY, {
+    expiresIn: '25d',
+  });
+};
 
-const Agent = mongoose.model("Agent", agentSchema);
+const Agent = mongoose.model('Agent', agentSchema);
 
 module.exports = Agent;

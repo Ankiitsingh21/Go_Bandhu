@@ -138,16 +138,18 @@ const changeSatus = async (req, res) => {
   }
 };
 
-
-const getQueryBYCityAndDocumentId = async (req,res)=>{
-  try{
+const getQueryBYCityAndDocumentId = async (req, res) => {
+  try {
     // console.log("hellow", req.params);
-    const city = req.params.cityName; 
-    const documentId = req.params.documentId; 
+    const city = req.params.cityName;
+    const documentId = req.params.documentId;
     // console.log(city,documentId);
-    const response = await queryService.getQueryByCityAndDocumentId(city,documentId);
+    const response = await queryService.getQueryByCityAndDocumentId(
+      city,
+      documentId
+    );
     // console.log(response);
-    if(response.length === 0){
+    if (response.length === 0) {
       return res.status(201).json({
         success: true,
         message: 'No Query found',
@@ -161,7 +163,7 @@ const getQueryBYCityAndDocumentId = async (req,res)=>{
       data: response,
       err: {},
     });
-  }catch (error) {
+  } catch (error) {
     console.error('Error in QueryController:', error);
     return res.status(500).json({
       success: false,
@@ -170,7 +172,7 @@ const getQueryBYCityAndDocumentId = async (req,res)=>{
       err: error,
     });
   }
-}
+};
 
 module.exports = {
   raiseProblem,
@@ -178,5 +180,5 @@ module.exports = {
   getQueryByQueryId,
   changeSatus,
   getStatusOfQuery,
-  getQueryBYCityAndDocumentId
+  getQueryBYCityAndDocumentId,
 };

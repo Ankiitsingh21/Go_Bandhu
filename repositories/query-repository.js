@@ -31,22 +31,22 @@ class QueryRepository extends CrudRepository {
     }
   }
 
-   async getQueryByCityAndDocumentId(city, documentId) {
+  async getQueryByCityAndDocumentId(city, documentId) {
     try {
       // console.log(city,documentId);
-      const query = {status: 'Submitted'};
+      const query = { status: 'Submitted' };
       // const query= {};
       if (city) query.city = new RegExp(`^${city}$`, 'i');
       if (documentId) query.documentId = { $in: [documentId] };
       // console.log("passing query = ",query);
-      const result =  await Query.find(query); 
+      const result = await Query.find(query);
       // console.log("result = ",result);
       return result;
     } catch (error) {
       console.error('Error in getQueryByCityAndDocumentId repository:', error);
       throw error;
     }
-  };
+  }
 }
 
 module.exports = {

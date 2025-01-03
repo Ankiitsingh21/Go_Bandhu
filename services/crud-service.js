@@ -35,13 +35,13 @@ class CrudService {
     }
   }
 
-  async getAll({}) {
+  async getAll() {
     try {
-      const response = await this.repository.getAll({});
-      return response;
+      const agents = await this.agentRepository.getAll();
+      return agents;
     } catch (error) {
-      console.log('something went wrong on Crud service layer');
-      throw { error };
+      console.error('Error in getAll method of crud service:', error);
+      throw new Error('Unable to retrieve all  from crud service ');
     }
   }
 

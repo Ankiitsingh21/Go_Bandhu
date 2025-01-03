@@ -7,6 +7,7 @@ const {
   validateUserAuthLogin,
   verifyToken,
   validateAgentAuth,
+  verifyAdminToken,
 } = require('../../middlewares/auth-requestvalidator.js');
 const {
   createProfile,
@@ -26,20 +27,38 @@ const {
   getQueryBYCityAndDocumentId,
 } = require('../../controller/query-controller.js');
 const { sendOtp, verifyOtp } = require('../../controller/otpController.js');
-const { addNewAgent, agentSignIn } = require('../../controller/agent-controller.js');
-const { accept, reject } = require('../../controller/problemSolving-controller.js');
+const {
+  addNewAgent,
+  agentSignIn,
+} = require('../../controller/agent-controller.js');
+const {
+  accept,
+  reject,
+} = require('../../controller/problemSolving-controller.js');
+const {
+  getAllAgents,
+  adminSignIn,
+  adminSignUp,
+} = require('../../controller/admin-controller.js');
 
-router.post('/SignUp', validateUserAuth, signUp, createProfile);
-
-router.post('/addNewAgent',validateAgentAuth,addNewAgent);
+//agents
+router.post('/addNewAgent', validateAgentAuth, addNewAgent);
 
 router.post('/agentLogin', validateUserAuthLogin, agentSignIn);
 
-router.get('/getQueries/city/:cityName/documentId/:documentId',verifyToken,getQueryBYCityAndDocumentId);
+router.post('/changeStatus', changeSatus);
 
-router.post('/accept',verifyToken,accept);
+router.get(
+  '/getQueries/city/:cityName/documentId/:documentId',
+  verifyToken,
+  getQueryBYCityAndDocumentId
+);
 
-router.post('/reject',verifyToken,reject);
+router.post('/accept', verifyToken, accept);
+
+router.post('/reject', verifyToken, reject);
+
+router.post('/SignUp', validateUserAuth, signUp, createProfile);
 
 router.post('/Login', validateUserAuthLogin, signIn);
 
@@ -47,7 +66,17 @@ router.post('/updateProfile/userId/:userId', verifyToken, updateProfile);
 
 router.get('/getProfile/userId/:userId', verifyToken, getProfile);
 
+//admin
+
+// router.post('/adminSignUp',adminSignUp);
+
+// router.post('/adminLogin',adminSignIn);
+
+router.get('/getAllAgent', verifyAdminToken, getAllAgents);
+
 // router.post('/addNewDocument', addNewDocument);
+
+//users
 
 router.get('/getAllDocument', getAllDocument);
 
@@ -58,8 +87,6 @@ router.get('/fetchQueryByUserId/userId/:userId', verifyToken, getQueryByUserId);
 router.get('/fetchQueryByQueryId/queryId/:queryId', getQueryByQueryId);
 
 router.get('/getStatusOfQuery/queryId/:queryId', getStatusOfQuery);
-
-router.post('/changeStatus', changeSatus);
 
 router.post('/send-otp', sendOtp);
 router.post('/verify-otp', verifyOtp);

@@ -68,8 +68,9 @@ class CrudRepository {
     }
   }
 
-  async getAll() {
+  async getAll({}) {
     try {
+      console.log('Using model in getAll:', this.model);
       const result = await this.model.find({});
       return result;
     } catch (error) {
