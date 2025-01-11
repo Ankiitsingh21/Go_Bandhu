@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const { signUp, signIn } = require('../../controller/user-controller.js');
+const { signUp, signIn, getAll } = require('../../controller/user-controller.js');
 const {
   validateUserAuth,
   validateUserAuthLogin,
@@ -53,6 +53,8 @@ router.get(
   verifyToken,
   getQueryBYCityAndDocumentId
 );
+
+router.get('/getAlluser',verifyToken,getAll);
 
 router.post('/accept', verifyToken, accept);
 

@@ -1,7 +1,10 @@
 const { UserRepository } = require('../repositories/user-repository');
+const CrudService = require('./crud-service');
 
-class UserService {
+class UserService extends CrudService{
   constructor() {
+    const userRepository = new UserRepository();
+    super(userRepository);
     this.userRepository = new UserRepository();
   }
 

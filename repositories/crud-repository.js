@@ -68,16 +68,17 @@ class CrudRepository {
     }
   }
 
-  async getAll({}) {
+  async getAll(filters = {}) {
     try {
       console.log('Using model in getAll:', this.model);
-      const result = await this.model.find({});
+      const result = await this.model.find(filters);
       return result;
     } catch (error) {
       console.log('Something went wrong in the repository layer');
       throw { error };
     }
   }
+  
 
   async findById(id) {
     try {

@@ -37,7 +37,7 @@ class CrudService {
 
   async getAll() {
     try {
-      const agents = await this.agentRepository.getAll();
+      const agents = await this.repository.getAll();
       return agents;
     } catch (error) {
       console.error('Error in getAll method of crud service:', error);

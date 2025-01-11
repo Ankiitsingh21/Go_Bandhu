@@ -50,6 +50,27 @@ const signIn = async (req, res) => {
   }
 };
 
+const getAll = async (req, res) => {
+  try {
+    // console.log("ho");
+    const response = await userService.getAll();
+    return res.status(201).json({
+      data: response,
+      success: true,
+      err: {},
+      message: 'Successfully fetched all users',
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      message: 'Not able to fetch all users',
+      data: {},
+      success: false,
+      err: error,
+    });
+  }
+};
+
 const isAdmin = async (req, res) => {
   try {
     const response = await userService.isAdmin(req.body.userId);
@@ -73,4 +94,5 @@ const isAdmin = async (req, res) => {
 module.exports = {
   signUp,
   signIn,
+  getAll
 };
