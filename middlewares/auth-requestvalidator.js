@@ -149,7 +149,7 @@ const verifyAgentToken = async (req, res, next) => {
   }
   try {
     const response = jwt.verify(token, JWT_KEY);
-    console.log(response);
+    // console.log(response);
     // req.user = response;
     if (response.role !== 'agent') {
       return res.status(401).json({
