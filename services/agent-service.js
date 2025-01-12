@@ -31,6 +31,16 @@ class AgentService extends CrudRepository {
     }
   }
 
+  async findByIdAndUpdate(id,data){
+    try {
+      const response = await this.agentRepository.findByIdAndUpdate(id, data);
+      return response;
+    } catch (error) {
+      console.log('Something went wrong in the Service Layer');
+      throw error;
+    }
+  }
+
   async getAllAgents() {
     try {
       // Fetch all agents from the repository

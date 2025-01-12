@@ -19,6 +19,16 @@ class AgentRepository extends CrudRepository {
     }
   }
 
+  async findByIdAndUpdate(id, data) {
+    try {
+      const result = await Agent.findByIdAndUpdate(id, data, {new: true});
+      return result;
+    } catch (error) {
+      console.log('Something went wrong in the repository layer');
+      throw { error };
+    }
+  }
+
   async findAllAgents() {
     try {
       return await Agent.find().exec();

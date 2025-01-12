@@ -24,6 +24,29 @@ const getAllAgents = async (req, res) => {
   }
 };
 
+const activateOrDeactivateAgent = async (req, res) => {
+  try {
+    const { id } = req.body;
+    const { status } = req.body;
+    // console.log(id+"   "+ status);
+    const response = await agentService.findByIdAndUpdate(id, { status });
+    return res.status(200).json({
+      success: true,
+      message: 'successfully updated agent status',
+      data: response,
+      err: {},
+    });
+  } catch (error) {
+    console.error('Error in AdminController:', error);
+    return res.status(500).json({
+      success: false,
+      message: 'Unable to update agent status',
+      data: {},
+      err: error,
+    });
+  }
+}
+
 const adminSignIn = async (req, res) => {
   try {
     const admin = await adminService.signIn({
@@ -73,4 +96,5 @@ module.exports = {
   getAllAgents,
   adminSignIn,
   adminSignUp,
+  activateOrDeactivateAgent
 };

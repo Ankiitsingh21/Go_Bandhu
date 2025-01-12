@@ -28,19 +28,27 @@ const agentSchema = new mongoose.Schema(
     },
     status: {
       type: String,
-      enum: ['accept', 'reject', 'pending'],
+      enum: ['Active', 'Inactive', 'pending'],
       default: 'pending',
     },
     address: {
       type: String,
       required: true,
     },
+    link:{
+      type:String,
+      default:" ",
+    },
+    role: {
+      type: String,
+      default: 'agent',
+    },
   },
   { timestamps: true }
 );
 
 agentSchema.methods.genJWT = function generate() {
-  return jwt.sign({ id: this._id, number: this.number }, JWT_KEY, {
+  return jwt.sign({ id: this._id, number: this.number , role:this.role}, JWT_KEY, {
     expiresIn: '25d',
   });
 };

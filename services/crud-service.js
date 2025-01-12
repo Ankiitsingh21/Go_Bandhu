@@ -47,6 +47,7 @@ class CrudService {
 
   async update(id, data) {
     try {
+      // console.log('id = ' + id);
       const response = await this.repository.update(id, data);
       return response;
     } catch (error) {

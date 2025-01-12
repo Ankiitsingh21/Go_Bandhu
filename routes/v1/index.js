@@ -8,6 +8,7 @@ const {
   verifyToken,
   validateAgentAuth,
   verifyAdminToken,
+  verifyAgentToken,
 } = require('../../middlewares/auth-requestvalidator.js');
 const {
   createProfile,
@@ -39,6 +40,7 @@ const {
   getAllAgents,
   adminSignIn,
   adminSignUp,
+  activateOrDeactivateAgent,
 } = require('../../controller/admin-controller.js');
 
 //agents
@@ -46,7 +48,7 @@ router.post('/addNewAgent', validateAgentAuth, addNewAgent);
 
 router.post('/agentLogin', validateUserAuthLogin, agentSignIn);
 
-router.post('/changeStatus', changeSatus);
+router.post('/changeStatus', verifyAgentToken,changeSatus);
 
 router.get(
   '/getQueries/city/:cityName/documentId/:documentId',
@@ -54,11 +56,11 @@ router.get(
   getQueryBYCityAndDocumentId
 );
 
-router.get('/getAlluser',verifyToken,getAll);
+router.get('/getAlluser',verifyAdminToken,getAll);
 
-router.post('/accept', verifyToken, accept);
+router.post('/accept', verifyAgentToken, accept);
 
-router.post('/reject', verifyToken, reject);
+router.post('/reject', verifyAgentToken, reject);
 
 router.post('/SignUp', validateUserAuth, signUp, createProfile);
 
@@ -68,11 +70,13 @@ router.post('/updateProfile/userId/:userId', verifyToken, updateProfile);
 
 router.get('/getProfile/userId/:userId', verifyToken, getProfile);
 
+router.post('/activateorDeactivateAgent', verifyAdminToken, activateOrDeactivateAgent);
+
 //admin
 
 // router.post('/adminSignUp',adminSignUp);
 
-// router.post('/adminLogin',adminSignIn);
+router.post('/adminLogin',adminSignIn);
 
 router.get('/getAllAgent', verifyAdminToken, getAllAgents);
 
