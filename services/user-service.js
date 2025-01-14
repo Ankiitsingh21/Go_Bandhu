@@ -33,27 +33,35 @@ class UserService extends CrudService{
 
   async signIn(data) {
     try {
-      // console.log("In the user service layer "+data.number);
       const number = data.number;
-      // console.log("In the user service layer "+data.password);
       const user = await this.userRepository.findByNumber({ number });
+  
       if (!user) {
         throw new Error('No user found');
       }
-      // if (user.roles == 'Admin') {
-      //   console.log('This user is Admin');
-      // }
+  
+      // Uncomment and adjust if you need password validation
       // if (!user.comparePassword(data.password)) {
       //   throw new Error('Incorrect password');
       // }
+  
       const token = user.genJWT();
-      // console.log(token);
-      return token;
+  
+      // Structure the response data
+      const response = {
+        id: user.id,        // Assuming user.id contains the user's unique identifier
+        number: user.number,
+        name: user.name,    // Assuming user.name contains the user's name
+        token: token
+      };
+  
+      return response; // Send the response data
     } catch (error) {
       console.log('Something went wrong in the Service Layer');
       throw error;
     }
   }
+  
 
   // isAdmin(userId) {
   //   try {
