@@ -40,7 +40,6 @@ class UserService extends CrudService{
         throw new Error('No user found');
       }
   
-      // Uncomment and adjust if you need password validation
       // if (!user.comparePassword(data.password)) {
       //   throw new Error('Incorrect password');
       // }
@@ -49,9 +48,9 @@ class UserService extends CrudService{
   
       // Structure the response data
       const response = {
-        id: user.id,        // Assuming user.id contains the user's unique identifier
+        userId: user.id,        
         number: user.number,
-        name: user.name,    // Assuming user.name contains the user's name
+        name: user.name,   
         token: token
       };
   
