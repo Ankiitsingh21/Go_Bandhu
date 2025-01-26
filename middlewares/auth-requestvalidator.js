@@ -159,7 +159,7 @@ const verifyAgentToken = async (req, res, next) => {
       });
     }
 
-    const agent = await Agent.findById(response.id); // Assuming the JWT contains the agent's ID
+    const agent = await Agent.findById(response.id); 
     if (!agent || agent.status !== 'Active') {
       return res.status(403).json({
         success: false,
