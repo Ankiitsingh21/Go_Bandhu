@@ -35,15 +35,17 @@ class ProfileService {
 
   async updateProfile(userId, updateData) {
     try {
+      // console.log(userId);
       const profiles = await this.profileRepository.findByUserId(userId);
       if (!profiles || profiles.length === 0) {
         throw new Error('Profile not found');
       }
 
-      const profile = profiles[0]; // Now profile is defined before logging
+      // const profile = profiles[0]; // Now profile is defined before logging
       // console.log('Profile:', profile);
       // console.log('Update data:', updateData);
-      return await this.profileRepository.update(profile.id, updateData);
+      // console.log('Profile:', profile);
+      return await this.profileRepository.update(profiles.id, updateData);
     } catch (error) {
       console.log('Something went wrong in ProfileService', error);
       throw error;
