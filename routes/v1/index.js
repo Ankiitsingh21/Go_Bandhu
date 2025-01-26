@@ -1,7 +1,11 @@
 const express = require('express');
 const router = express.Router();
 
-const { signUp, signIn, getAll } = require('../../controller/user-controller.js');
+const {
+  signUp,
+  signIn,
+  getAll,
+} = require('../../controller/user-controller.js');
 const {
   validateUserAuth,
   validateUserAuthLogin,
@@ -48,7 +52,7 @@ router.post('/addNewAgent', validateAgentAuth, addNewAgent);
 
 router.post('/agentLogin', validateUserAuthLogin, agentSignIn);
 
-router.post('/changeStatus', verifyAgentToken,changeSatus);
+router.post('/changeStatus', verifyAgentToken, changeSatus);
 
 router.get(
   '/getQueries/city/:cityName/documentId/:documentId',
@@ -56,7 +60,7 @@ router.get(
   getQueryBYCityAndDocumentId
 );
 
-router.get('/getAlluser',verifyAdminToken,getAll);
+router.get('/getAlluser', verifyAdminToken, getAll);
 
 router.post('/accept', verifyAgentToken, accept);
 
@@ -70,13 +74,17 @@ router.post('/updateProfile/userId/:userId', verifyToken, updateProfile);
 
 router.get('/getProfile/userId/:userId', verifyToken, getProfile);
 
-router.post('/activateorDeactivateAgent', verifyAdminToken, activateOrDeactivateAgent);
+router.post(
+  '/activateorDeactivateAgent',
+  verifyAdminToken,
+  activateOrDeactivateAgent
+);
 
 //admin
 
 // router.post('/adminSignUp',adminSignUp);
 
-router.post('/adminLogin',adminSignIn);
+router.post('/adminLogin', adminSignIn);
 
 router.get('/getAllAgent', verifyAdminToken, getAllAgents);
 

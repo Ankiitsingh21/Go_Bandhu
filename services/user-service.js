@@ -1,7 +1,7 @@
 const { UserRepository } = require('../repositories/user-repository');
 const CrudService = require('./crud-service');
 
-class UserService extends CrudService{
+class UserService extends CrudService {
   constructor() {
     const userRepository = new UserRepository();
     super(userRepository);
@@ -35,32 +35,31 @@ class UserService extends CrudService{
     try {
       const number = data.number;
       const user = await this.userRepository.findByNumber({ number });
-  
+
       if (!user) {
         throw new Error('No user found');
       }
-  
+
       // if (!user.comparePassword(data.password)) {
       //   throw new Error('Incorrect password');
       // }
-  
+
       const token = user.genJWT();
-  
+
       // Structure the response data
       const response = {
-        userId: user.id,        
+        userId: user.id,
         number: user.number,
-        name: user.name,   
-        token: token
+        name: user.name,
+        token: token,
       };
-  
+
       return response; // Send the response data
     } catch (error) {
       console.log('Something went wrong in the Service Layer');
       throw error;
     }
   }
-  
 
   // isAdmin(userId) {
   //   try {

@@ -136,7 +136,6 @@ const verifyAdminToken = (req, res, next) => {
   }
 };
 
-
 const verifyAgentToken = async (req, res, next) => {
   const token = req.headers['x-access-token'];
   if (!token) {
@@ -198,12 +197,11 @@ const verifyAgentToken = async (req, res, next) => {
   }
 };
 
-
 module.exports = {
   validateUserAuth,
   validateUserAuthLogin,
   verifyToken,
   verifyAdminToken,
   validateAgentAuth,
-  verifyAgentToken
+  verifyAgentToken,
 };

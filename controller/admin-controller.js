@@ -45,7 +45,7 @@ const activateOrDeactivateAgent = async (req, res) => {
       err: error,
     });
   }
-}
+};
 
 const adminSignIn = async (req, res) => {
   try {
@@ -96,5 +96,5 @@ module.exports = {
   getAllAgents,
   adminSignIn,
   adminSignUp,
-  activateOrDeactivateAgent
+  activateOrDeactivateAgent,
 };

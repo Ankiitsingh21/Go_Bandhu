@@ -35,9 +35,9 @@ const agentSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    link:{
-      type:String,
-      default:" ",
+    link: {
+      type: String,
+      default: ' ',
     },
     role: {
       type: String,
@@ -48,9 +48,13 @@ const agentSchema = new mongoose.Schema(
 );
 
 agentSchema.methods.genJWT = function generate() {
-  return jwt.sign({ id: this._id, number: this.number , role:this.role}, JWT_KEY, {
-    expiresIn: '25d',
-  });
+  return jwt.sign(
+    { id: this._id, number: this.number, role: this.role },
+    JWT_KEY,
+    {
+      expiresIn: '25d',
+    }
+  );
 };
 
 const Agent = mongoose.model('Agent', agentSchema);

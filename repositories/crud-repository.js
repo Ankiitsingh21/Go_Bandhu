@@ -26,12 +26,14 @@ class CrudRepository {
   }
 
   async update(id, data) {
-    // console.log('this.model:', this.model); 
+    // console.log('this.model:', this.model);
     if (!id || !data) {
       throw new Error('ID and data are required for updating the query.');
     }
     try {
-      const result = await this.model.findByIdAndUpdate(id, data, { new: true });
+      const result = await this.model.findByIdAndUpdate(id, data, {
+        new: true,
+      });
       return result;
     } catch (error) {
       console.log('Something went wrong in the repository layer');
@@ -74,7 +76,6 @@ class CrudRepository {
       throw { error };
     }
   }
-  
 
   async findById(id) {
     try {

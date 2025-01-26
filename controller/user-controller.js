@@ -94,5 +94,5 @@ const isAdmin = async (req, res) => {
 module.exports = {
   signUp,
   signIn,
-  getAll
+  getAll,
 };

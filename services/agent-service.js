@@ -31,7 +31,7 @@ class AgentService extends CrudRepository {
     }
   }
 
-  async findByIdAndUpdate(id,data){
+  async findByIdAndUpdate(id, data) {
     try {
       const response = await this.agentRepository.findByIdAndUpdate(id, data);
       return response;
