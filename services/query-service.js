@@ -53,7 +53,10 @@ class QueryService extends CrudService {
         assistanceType,
         documentId,
         documentName,
+        noOfHours: data.noOfHours,
+        timing: data.timing,
       });
+
       return response;
     } catch (error) {
       console.log(error);

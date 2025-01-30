@@ -13,6 +13,8 @@ const raiseProblem = async (req, res) => {
       text: req.body.text,
       assistanceType: req.body.assistanceType,
       address: req.body.address,
+      noOfHours: req.body.noOfhours,
+      timing: req.body.timing,
     });
     return res.status(201).json({
       success: true,

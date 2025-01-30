@@ -2,7 +2,11 @@ const mongoose = require('mongoose');
 
 const Status = ['Submitted', 'InProgress', 'Call', 'Resolved'];
 
-const AssistanceType = ['Physical', 'Virtual'];
+const AssistanceType = ['Physical - Rs.499 onwards', 'Virtual - Rs.9'];
+
+// const numberOfHOurs = ['2 Hours - Rs.499','4 Hours - Rs.999','6 Hours - Rs.1499'];
+
+// const timing = ['10:00 Am','11:00 Am','12:00 Pm','01:00 Pm','02:00 Pm','03:00 Pm','04:00 Pm','05:00 Pm','06:00 Pm','07:00 Pm'];
 
 const querySchema = new mongoose.Schema(
   {
@@ -51,6 +55,14 @@ const querySchema = new mongoose.Schema(
       type: String,
       default: null,
     },
+    noOfHours:{
+      type: String,
+      default:null,
+    },
+    timing:{
+      type: String,
+      default:null,
+    }
   },
   { timestamps: true }
 );
