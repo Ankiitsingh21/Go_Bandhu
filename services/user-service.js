@@ -48,13 +48,13 @@ class UserService extends CrudService {
 
       // Structure the response data
       const response = {
-        userId: user.id,
+        id: user.id,
         number: user.number,
         name: user.name,
         token: token,
       };
 
-      return response; // Send the response data
+      return response; 
     } catch (error) {
       console.log('Something went wrong in the Service Layer');
       throw error;

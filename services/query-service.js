@@ -16,8 +16,12 @@ class QueryService extends CrudService {
     try {
       // console.log(data);
       // const userId = req.user.id;
-      const { userId, text, assistanceType, documentId, address } = data;
+      // console.log(req.user);
+      // console.log(userId);
+      const {  userId ,text, assistanceType, documentId, address } = data;
+      // console.log(userId);
       const profiles = await this.profileRepository.findByUserId(userId);
+      // console.log(profiles);
       if (!profiles || profiles.length === 0) {
         console.error(`Profile not found for userId: ${userId}`);
         throw new Error('Profile not found');
@@ -30,8 +34,8 @@ class QueryService extends CrudService {
         console.error(`Document not found for documentId: ${documentId}`);
         throw new Error('Document not found');
       }
-      const profile = profiles[0];
-      const { number, name: userName, city } = profile;
+      // const profile = profiles[0];
+      const { number, name: userName, city } = profiles;
       const { name: documentName } = document;
       if (!userName || !city) {
         console.error(
@@ -50,7 +54,6 @@ class QueryService extends CrudService {
         documentId,
         documentName,
       });
-
       return response;
     } catch (error) {
       console.log(error);

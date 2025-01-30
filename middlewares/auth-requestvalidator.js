@@ -58,6 +58,7 @@ const verifyToken = (req, res, next) => {
     const response = jwt.verify(token, JWT_KEY);
     // console.log(response);
     req.user = response;
+    // console.log(req.user);
     next();
   } catch (error) {
     if (error.name === 'JsonWebTokenError') {
