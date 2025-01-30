@@ -27,7 +27,7 @@ const updateProfile = async (req, res) => {
     // const { userId } = req.params;
     const updateData = req.body;
     // console.log(req.user.id);
-    const userId = req.params.userId;
+    const userId = req.user.id;
     // console.log(userId)
     // console.log(updateData);
     const updatedProfile = await profileService.updateProfile(
@@ -54,7 +54,7 @@ const updateProfile = async (req, res) => {
 
 const getProfile = async (req, res) => {
   try {
-    const userId = req.params.userId;
+    const userId = req.user.id;
     // console.log(userId);
     const profile = await profileService.getProfileByUserId(userId);
 

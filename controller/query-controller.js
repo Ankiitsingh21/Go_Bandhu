@@ -33,7 +33,7 @@ const raiseProblem = async (req, res) => {
 
 const getQueryByUserId = async (req, res) => {
   try {
-    const userId = req.params.userId;
+    const userId = req.user.id;
     const response = await queryService.getQueryByUserId(userId);
     return res.status(201).json({
       success: true,
