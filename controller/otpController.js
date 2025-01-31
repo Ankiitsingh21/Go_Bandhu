@@ -106,7 +106,7 @@ const verifyOtp = async (req, res) => {
     });
   } catch (error) {
     console.error('Error in verifyOtp:', error);
-    res.status(500).json({
+    res.status(501).json({
       success: false,
       message: error.message,
     });

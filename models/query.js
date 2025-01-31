@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const Status = ['Submitted', 'InProgress', 'Call', 'Resolved'];
+const Status = ['Submitted', 'InProgress', 'Resolved'];
 
 const AssistanceType = ['Physical - Rs.499 onwards', 'Virtual - Rs.9'];
 
