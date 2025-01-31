@@ -56,7 +56,7 @@ const sendOtp = async (req, res) => {
     });
   } catch (error) {
     console.error('Error in sendOtp:', error);
-    res.status(500).json({
+    res.status(501).json({
       success: false,
       message: error.response?.data?.message || error.message,
     });
