@@ -1,6 +1,7 @@
 const { createClient } = require('redis');
 const axios = require('axios');
-const Profile = require('../models/profile');
+// const Profile = require('../models/profile');
+const User = require('../models/user');
 require('dotenv').config();
 
 const redisConfig = {
@@ -100,13 +101,15 @@ const verifyOtp = async (req, res) => {
     // OTP is valid, delete it from Redis
     await client.del(mobileNumber);
 
+    const update = await User.findOneAndUpdate({ number: mobileNumber }, { numberVerified: true });
+    // console.log("hiiii   "+update);
     res.json({
       success: true,
       message: 'OTP verified successfully',
     });
   } catch (error) {
     console.error('Error in verifyOtp:', error);
-    res.status(501).json({
+    res.status(500).json({
       success: false,
       message: error.message,
     });

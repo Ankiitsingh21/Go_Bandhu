@@ -57,6 +57,14 @@ const verifyToken = (req, res, next) => {
   try {
     const response = jwt.verify(token, JWT_KEY);
     // console.log(response);
+    if(response.numberVerified === false){
+      return res.status(401).json({
+        success: false,
+        data: {},
+        message: 'Number is not verified',
+        err: 'Unauthorized access',
+      })
+    }
     req.user = response;
     // console.log(req.user);
     next();
@@ -197,6 +205,50 @@ const verifyAgentToken = async (req, res, next) => {
     });
   }
 };
+
+// const numberIsVerified = async (req, res, next) => {
+//   const token = req.headers['x-access-token'];
+//   if (!token) {
+//     return res.status(401).json({
+//       success: false,
+//       data: {},
+//       message: 'Access token is missing',
+//       err: 'No token provided',
+//     });
+//   }
+//   try {
+//     const response = jwt.verify(token, JWT_KEY);
+//     console.log(response);
+//     // req.user = response;
+    
+
+//     // next();
+//   } catch (error) {
+//     if (error.name === 'JsonWebTokenError') {
+//       return res.status(400).json({
+//         success: false,
+//         data: {},
+//         message: 'Invalid token',
+//         err: error.message,
+//       });
+//     }
+
+//     if (error.name === 'TokenExpiredError') {
+//       return res.status(401).json({
+//         success: false,
+//         data: {},
+//         message: 'Token has expired',
+//         err: error.message,
+//       });
+//     }
+//     return res.status(500).json({
+//       success: false,
+//       data: {},
+//       message: 'Something went wrong while verifying the token',
+//       err: error.message,
+//     });
+//   }
+// };
 
 module.exports = {
   validateUserAuth,

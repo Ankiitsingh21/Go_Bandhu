@@ -23,6 +23,10 @@ const userSchema = new mongoose.Schema(
       enum: rolesEnum,
       default: 'USER',
     },
+    numberVerified:{
+      type: Boolean,
+      default: false,
+    }
   },
   { timestamps: true }
 );
@@ -32,7 +36,7 @@ const userSchema = new mongoose.Schema(
 // };
 
 userSchema.methods.genJWT = function generate() {
-  return jwt.sign({ id: this._id, number: this.number }, JWT_KEY, {
+  return jwt.sign({ id: this._id, number: this.number , numberVerified: this.numberVerified }, JWT_KEY, {
     expiresIn: '25d',
   });
 };
