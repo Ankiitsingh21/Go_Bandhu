@@ -55,14 +55,14 @@ const querySchema = new mongoose.Schema(
       type: String,
       default: null,
     },
-    noOfHours:{
+    noOfHours: {
       type: String,
-      default:null,
+      default: null,
     },
-    timing:{
+    timing: {
       type: String,
-      default:null,
-    }
+      default: null,
+    },
   },
   { timestamps: true }
 );

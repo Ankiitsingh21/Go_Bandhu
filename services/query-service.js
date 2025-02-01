@@ -18,7 +18,7 @@ class QueryService extends CrudService {
       // const userId = req.user.id;
       // console.log(req.user);
       // console.log(userId);
-      const {  userId ,text, assistanceType, documentId, address } = data;
+      const { userId, text, assistanceType, documentId, address } = data;
       // console.log(userId);
       const profiles = await this.profileRepository.findByUserId(userId);
       // console.log(profiles);

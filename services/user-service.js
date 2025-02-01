@@ -54,7 +54,7 @@ class UserService extends CrudService {
         token: token,
       };
 
-      return response; 
+      return response;
     } catch (error) {
       console.log('Something went wrong in the Service Layer');
       throw error;

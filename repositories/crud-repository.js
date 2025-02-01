@@ -5,13 +5,31 @@ class CrudRepository {
 
   async create(data) {
     try {
-      // console.log("in the repository layer "+data);
       const result = await this.model.create(data);
-      // console.log("result"+result);
       return result;
     } catch (error) {
       console.log('Something went wrong in the repository layer');
-      throw { error };
+
+      if (error.code === 11000) {
+        const key = Object.keys(error.keyPattern)[0];
+        const value = error.keyValue[key];
+        // console.log('Key:', key + ' Value:', value);
+        const existingUser = await this.model.findOne({ [key]: value });
+
+        if (existingUser && key === 'number' && !existingUser.isVerified) {
+          throw {
+            error: 'User already exists, but the number is not verified.',
+            existingUser,
+          };
+        } else {
+          throw {
+            error: `Duplicate key error: ${key} already exists.`,
+            existingUser,
+          };
+        }
+      } else {
+        throw { error };
+      }
     }
   }
 

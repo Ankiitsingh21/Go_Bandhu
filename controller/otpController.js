@@ -68,7 +68,7 @@ const verifyOtp = async (req, res) => {
   try {
     const { otp, mobileNumber } = req.body;
 
-    if(mobileNumber =='7618300661' && otp == '1234'){
+    if (mobileNumber == '7618300661' && otp == '1234') {
       return res.json({
         success: true,
         message: 'OTP verified successfully',
@@ -101,7 +101,10 @@ const verifyOtp = async (req, res) => {
     // OTP is valid, delete it from Redis
     await client.del(mobileNumber);
 
-    const update = await User.findOneAndUpdate({ number: mobileNumber }, { numberVerified: true });
+    const update = await User.findOneAndUpdate(
+      { number: mobileNumber },
+      { numberVerified: true }
+    );
     // console.log("hiiii   "+update);
     res.json({
       success: true,

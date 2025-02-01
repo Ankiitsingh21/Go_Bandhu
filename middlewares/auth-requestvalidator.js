@@ -57,13 +57,13 @@ const verifyToken = (req, res, next) => {
   try {
     const response = jwt.verify(token, JWT_KEY);
     // console.log(response);
-    if(response.numberVerified === false){
+    if (response.numberVerified === false) {
       return res.status(401).json({
         success: false,
         data: {},
         message: 'Number is not verified',
         err: 'Unauthorized access',
-      })
+      });
     }
     req.user = response;
     // console.log(req.user);
@@ -168,7 +168,7 @@ const verifyAgentToken = async (req, res, next) => {
       });
     }
 
-    const agent = await Agent.findById(response.id); 
+    const agent = await Agent.findById(response.id);
     if (!agent || agent.status !== 'Active') {
       return res.status(403).json({
         success: false,
@@ -220,7 +220,6 @@ const verifyAgentToken = async (req, res, next) => {
 //     const response = jwt.verify(token, JWT_KEY);
 //     console.log(response);
 //     // req.user = response;
-    
 
 //     // next();
 //   } catch (error) {
