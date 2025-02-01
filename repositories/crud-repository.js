@@ -15,8 +15,8 @@ class CrudRepository {
         const value = error.keyValue[key];
         // console.log('Key:', key + ' Value:', value);
         const existingUser = await this.model.findOne({ [key]: value });
-
-        if (existingUser && key === 'number' && !existingUser.isVerified) {
+        // console.log(existingUser);
+        if (existingUser && key === 'number' && !existingUser.numberVerified) {
           throw {
             error: 'User already exists, but the number is not verified.',
             existingUser,

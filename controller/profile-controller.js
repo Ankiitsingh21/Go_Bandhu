@@ -5,10 +5,12 @@ const profileService = new ProfileService();
 const createProfile = async (req, res) => {
   try {
     const profile = await profileService.createProfileFromUser(req.userId);
+    // console.log('Profile:', profile);
+    const token = profile.token;
     return res.status(201).json({
       success: true,
       message: 'User and Profile created successfully',
-      data: profile,
+      data: profile,token,
       err: {},
     });
   } catch (error) {

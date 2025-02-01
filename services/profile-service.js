@@ -26,7 +26,11 @@ class ProfileService {
           number: user.number,
         },
       ];
-      return await this.profileRepository.create(profileData);
+      const profile = await this.profileRepository.create(profileData);
+      const token = user.genJWT();
+      profile.token = token;
+      // console.log('Profile:', profile);
+      return profile;
     } catch (error) {
       console.log('Something went wrong in ProfileService', error);
       throw error;
