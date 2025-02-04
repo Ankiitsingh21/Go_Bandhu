@@ -16,7 +16,7 @@ const signUp = async (req, res, next) => {
     //   err: {},
     // });
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     return res.status(500).json({
       success: 'false',
       message: 'Not able to create a new user',
@@ -41,7 +41,7 @@ const signIn = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    return res.status(500).json({
+    return res.status(502).json({
       success: 'false',
       message: 'Not able to Login',
       data: {},
@@ -61,7 +61,7 @@ const getAll = async (req, res) => {
       message: 'Successfully fetched all users',
     });
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     return res.status(500).json({
       message: 'Not able to fetch all users',
       data: {},
@@ -81,7 +81,7 @@ const isAdmin = async (req, res) => {
       message: 'Successfully fetched user is admin ',
     });
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     return res.status(500).json({
       message: 'user is not a admin',
       data: {},
