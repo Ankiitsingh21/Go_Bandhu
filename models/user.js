@@ -37,7 +37,7 @@ const userSchema = new mongoose.Schema(
 
 userSchema.methods.genJWT = function generate() {
   return jwt.sign(
-    { id: this._id, number: this.number, numberVerified: this.numberVerified },
+    { id: this._id,},
     JWT_KEY,
     {
       expiresIn: '25d',

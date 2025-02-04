@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 const { JWT_KEY } = require('../config/serverConfig');
 const Agent = require('../models/agents');
+const User = require('../models/user');
 
 const validateUserAuth = (req, res, next) => {
   if (!req.body.number) {
@@ -44,7 +45,7 @@ const validateAgentAuth = (req, res, next) => {
   next();
 };
 
-const verifyToken = (req, res, next) => {
+const verifyToken = async (req, res, next) => {
   const token = req.headers['x-access-token'];
   if (!token) {
     return res.status(401).json({
@@ -57,7 +58,9 @@ const verifyToken = (req, res, next) => {
   try {
     const response = jwt.verify(token, JWT_KEY);
     // console.log(response);
-    if (response.numberVerified === false) {
+    const user = await User.findById(response.id);
+    console.log(user);
+    if (user.numberVerified === false) {
       return res.status(401).json({
         success: false,
         data: {},
