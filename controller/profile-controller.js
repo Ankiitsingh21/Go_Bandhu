@@ -10,7 +10,8 @@ const createProfile = async (req, res) => {
     return res.status(201).json({
       success: true,
       message: 'User and Profile created successfully',
-      data: profile,token,
+      data: profile,
+      token,
       err: {},
     });
   } catch (error) {

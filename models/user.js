@@ -36,13 +36,9 @@ const userSchema = new mongoose.Schema(
 // };
 
 userSchema.methods.genJWT = function generate() {
-  return jwt.sign(
-    { id: this._id,},
-    JWT_KEY,
-    {
-      expiresIn: '25d',
-    }
-  );
+  return jwt.sign({ id: this._id }, JWT_KEY, {
+    expiresIn: '25d',
+  });
 };
 
 const User = mongoose.model('User', userSchema);

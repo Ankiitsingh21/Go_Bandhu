@@ -9,38 +9,6 @@ class CrudRepository {
       return result;
     } catch (error) {
       console.log('Something went wrong in the repository layer');
-
-      if (error.code === 11000) {
-        const key = Object.keys(error.keyPattern)[0];
-        const value = error.keyValue[key];
-        // console.log('Key:', key + ' Value:', value);
-        const existingUser = await this.model.findOne({ [key]: value });
-        // console.log(existingUser);
-        if (existingUser && key === 'number' && !existingUser.numberVerified) {
-          // const token = existingUser.genJWT();
-          throw {
-            error: 'User already exists, but the number is not verified.',
-            existingUser,
-            // token,
-          };
-        } else {
-          throw {
-            error: `Duplicate key error: ${key} already exists.`,
-            existingUser,
-          };
-        }
-      } else {
-        throw { error };
-      }
-    }
-  }
-
-  async destroy(id) {
-    try {
-      const result = await this.model.findByIdAndDelete(id);
-      return result;
-    } catch (error) {
-      console.log('Something went wrong in the repository layer');
       throw { error };
     }
   }

@@ -70,7 +70,7 @@ const verifyOtp = async (req, res) => {
 
     if (mobileNumber == '9410695320' && otp == '1234') {
       // console.log("hello");
-     await  User.findOneAndUpdate(
+      await User.findOneAndUpdate(
         { number: mobileNumber },
         { numberVerified: true }
       );

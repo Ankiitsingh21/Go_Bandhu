@@ -11,14 +11,14 @@ class UserService extends CrudService {
   async signUp(data) {
     try {
       // Create the user
-      const user = await this.userRepository.create(data);
-  
+      const user = await this.userRepository.createe(data);
+
       // Generate the JWT token
       // const token = user.genJWT();
-  
+
       // Add the token to the user object
       // user.token = token;
-  
+
       // Return the user object with the token included
       return user;
     } catch (error) {
@@ -27,7 +27,7 @@ class UserService extends CrudService {
       // const user = await this.userRepository.findByNumber({ number: data.number });
       // console.log(user);
       // const token = user.genJWT();
-      throw {error};
+      throw { error };
     }
   }
 
@@ -52,7 +52,7 @@ class UserService extends CrudService {
       }
 
       // console.log(user);
-      if(user.numberVerified == false){
+      if (user.numberVerified == false) {
         throw new Error('Please verify your number');
       }
 
