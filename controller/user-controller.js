@@ -1,4 +1,5 @@
 const UserService = require('../services/user-service.js');
+const User = require('../models/user');
 
 const userService = new UserService();
 
@@ -17,10 +18,13 @@ const signUp = async (req, res, next) => {
     // });
   } catch (error) {
     // console.log(error);
+    const user = await User.findOne( error.number );
+    // console.log(user);
+    const token = user.genJWT();
     return res.status(500).json({
       success: 'false',
       message: 'Not able to create a new user',
-      data: {},
+      data: {token},
       err: error,
     });
   }

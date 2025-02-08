@@ -17,9 +17,11 @@ class CrudRepository {
         const existingUser = await this.model.findOne({ [key]: value });
         // console.log(existingUser);
         if (existingUser && key === 'number' && !existingUser.numberVerified) {
+          // const token = existingUser.genJWT();
           throw {
             error: 'User already exists, but the number is not verified.',
             existingUser,
+            // token,
           };
         } else {
           throw {

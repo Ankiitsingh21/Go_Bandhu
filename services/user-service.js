@@ -23,8 +23,11 @@ class UserService extends CrudService {
       return user;
     } catch (error) {
       console.log('Something went wrong in the Service Layer');
-      console.log(error);
-      throw error;
+      // console.log(error);
+      // const user = await this.userRepository.findByNumber({ number: data.number });
+      // console.log(user);
+      // const token = user.genJWT();
+      throw {error};
     }
   }
 
