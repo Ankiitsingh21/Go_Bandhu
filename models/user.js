@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 // const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const { SALT, JWT_KEY } = require('../config/serverConfig');
+const { JWT_KEY } = require('../config/serverConfig');
 
 const rolesEnum = ['ADMIN', 'USER', 'SUPERADMIN', 'VARIABLE'];
 
@@ -30,6 +30,10 @@ const userSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+
+// userSchema.post('init', function(doc) {
+//   doc.collection.createIndex({ number: 1 }, { unique: true });
+// });
 
 // userSchema.methods.comparePassword = function compare(password) {
 //   return bcrypt.compareSync(password, this.password);

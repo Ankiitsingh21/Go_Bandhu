@@ -8,6 +8,7 @@ class UserRepository extends CrudRepository {
   async createe(data) {
     try {
       const result = await User.create(data);
+      // console.log(result);
       return result;
     } catch (error) {
       console.log('Something went wrong in the repository layer');

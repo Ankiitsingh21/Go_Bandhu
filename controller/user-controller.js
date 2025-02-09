@@ -14,13 +14,24 @@ const signUp = async (req, res, next) => {
     //   success: 'True',
     //   message: 'Succesfully created a new user',
     //   data: user,
-    //   err: {},
+    //   err: {},.
     // });
   } catch (error) {
-    // console.log(error);
+    // console.log(error.error.error);
     const user = await User.findOne(error.number);
     // console.log(user);
     const token = user.genJWT();
+    if (
+      error.error.error ==
+      'User already exists, but the number is not verified.'
+    ) {
+      return res.status(200).json({
+        success: 'true',
+        message: 'User already exists, but the number is not verified',
+        token: token,
+        err: {},
+      });
+    }
     return res.status(500).json({
       success: 'false',
       message: 'Not able to create a new user',
