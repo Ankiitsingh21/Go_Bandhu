@@ -1,19 +1,23 @@
 const AgentService = require('../services/agent-service');
 const DocumentService = require('../services/document-service');
+const Agent = require('../models/agents');
+const Document = require('../models/document');
 
 const documentService = new DocumentService();
 const agentService = new AgentService();
 
 const addNewAgent = async (req, res) => {
   try {
-    const Document = await documentService.getById(req.body.documentId);
-    const response = await agentService.create({
+    // const Document = await documentService.getById(req.body.documentId);
+    const Documentt = await Document.find({_id:req.body.documentId});
+    // console.log(Documentt);
+    const response = await agentService.createe({
       name: req.body.name,
       number: req.body.number,
       documentId: req.body.documentId,
       city: req.body.city,
       address: req.body.address,
-      documentName: Document[0].name,
+      documentName: Documentt[0].name,
     });
     return res.status(200).json({
       success: 'True',
@@ -22,11 +26,25 @@ const addNewAgent = async (req, res) => {
       err: {},
     });
   } catch (error) {
-    console.log(error);
+    // console.log(error.error.error);
+    const agent = await Agent.findOne(error.number);
+    // console.log(user);
+    const token = agent.genJWT();
+    if (
+      error.error.error ==
+      'User already exists, but the number is not verified.'
+    ) {
+      return res.status(200).json({
+        success: 'true',
+        message: 'User already exists, but the number is not verified',
+        token: token,
+        err: {},
+      });
+    }
     return res.status(500).json({
       success: 'false',
-      message: 'Not able to add a new Agent',
-      data: {},
+      message: 'Not able to create a new user',
+      data: { token },
       err: error,
     });
   }
@@ -44,7 +62,7 @@ const agentSignIn = async (req, res) => {
       err: {},
     });
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     return res.status(500).json({
       success: 'false',
       message: 'Not able to Login',
@@ -54,7 +72,33 @@ const agentSignIn = async (req, res) => {
   }
 };
 
+const getAgent = async(req,res)=>{
+  try {
+    // console.log(req.agent.id);
+    // const agent = await agentService.getById(req.agent.id);
+    // const agent = await agentService.findByA(req.agent.id);
+    const agentID=req.agent.id;
+    const agent = await Agent.find({ _id: agentID });
+    // console.log(agent);
+    return res.status(200).json({
+      success: 'True',
+      message: 'Succesfully Login',
+      data: agent,
+      err: {},
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      success: 'false',
+      message: 'Not able to fetch Profile',
+      data: {},
+      err: error.message,
+    });
+  }
+}
+
 module.exports = {
   addNewAgent,
   agentSignIn,
+  getAgent,
 };

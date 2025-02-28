@@ -56,13 +56,13 @@ const signIn = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    if(error.message == 'No user found'){
+    if (error.message == 'No user found') {
       return res.status(500).json({
         success: 'false',
         message: 'No user found',
         data: {},
         err: error.message,
-      })
+      });
     }
     return res.status(502).json({
       success: 'false',

@@ -7,11 +7,12 @@ const agentSchema = new mongoose.Schema(
     name: {
       type: String,
       required: true,
-      unique: true,
+      // unique: true,
     },
     number: {
       type: Number,
       required: true,
+      unique:true
     },
     documentId: {
       type: [mongoose.Schema.Types.ObjectId],
@@ -43,6 +44,10 @@ const agentSchema = new mongoose.Schema(
       type: String,
       default: 'agent',
     },
+    numberVerified: {
+      type: Boolean,
+      default: false,
+    },
   },
   { timestamps: true }
 );
@@ -56,6 +61,10 @@ agentSchema.methods.genJWT = function generate() {
     }
   );
 };
+
+agentSchema.post('init', function(doc) {
+  doc.collection.createIndex({ number: 1 }, { unique: true });
+});
 
 const Agent = mongoose.model('Agent', agentSchema);
 

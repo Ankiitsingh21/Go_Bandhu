@@ -8,9 +8,12 @@ const problemSolvingService = new ProblemSolvingService();
 const accept = async (req, res) => {
   try {
     statusc = 'accepted';
+    // console.log(req.agent.id)
+    const AgentId = req.agent.id;
     const response = await problemSolvingService.create({
       QueryId: req.body.QueryId,
-      AgentId: req.body.AgentId,
+      // AgentId: req.body.AgentId,
+      AgentId,
       status: statusc,
     });
     const status = 'InProgress';
@@ -35,12 +38,17 @@ const accept = async (req, res) => {
 
 const reject = async (req, res) => {
   try {
-    const { QueryId, AgentId } = req.body;
+    const  QueryId  = req.body.QueryId;
+    const AgentId= req.agent.id;
+    // console.log(QueryId,AgentId);
     const existingQuery = await problemSolvingService.getAll({
       QueryId,
-      AgentId,
+      AgentId
+      // AgentId,
     });
-    if (existingQuery && existingQuery.status === 'accepted') {
+    const existingQueryy= existingQuery[0];
+    // console.log(existingQuery[0]);
+    if (existingQueryy && existingQueryy.status === 'accepted') {
       await problemSolvingService.delete(existingQuery._id);
       return res.status(200).json({
         success: true,

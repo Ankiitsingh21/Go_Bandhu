@@ -59,7 +59,7 @@ const verifyToken = async (req, res, next) => {
     const response = jwt.verify(token, JWT_KEY);
     // console.log(response);
     const user = await User.findById(response.id);
-    console.log(user);
+    // console.log(user);
     if (user.numberVerified === false) {
       return res.status(401).json({
         success: false,
@@ -150,6 +150,7 @@ const verifyAdminToken = (req, res, next) => {
 
 const verifyAgentToken = async (req, res, next) => {
   const token = req.headers['x-access-token'];
+  // console.log(token);
   if (!token) {
     return res.status(401).json({
       success: false,
@@ -172,7 +173,24 @@ const verifyAgentToken = async (req, res, next) => {
     }
 
     const agent = await Agent.findById(response.id);
-    if (!agent || agent.status !== 'Active') {
+    // console.log(agent);
+    // if(!agent.numberVerified){
+    //   return res.status(501).json({
+    //     success:false,
+    //     data:{},
+    //     message:'Number is not verified',
+    //     err: 'Number is not verified',
+    //   })
+    // }
+    if(!agent){
+      return res.status(404).json({
+        success: false,
+        data: {},
+        message: 'No Agent Found',
+        err: 'No Agent Found',
+      })
+    }
+    if (agent.status !== 'Active') {
       return res.status(403).json({
         success: false,
         data: {},
@@ -180,6 +198,8 @@ const verifyAgentToken = async (req, res, next) => {
         err: 'Inactive agent',
       });
     }
+    req.agent = response;
+    // console.log(req.agent);
 
     next();
   } catch (error) {

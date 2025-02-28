@@ -1,5 +1,6 @@
 const { text } = require('body-parser');
 const QueryService = require('../services/query-service');
+const  Agent = require('../models/agents');
 
 const queryService = new QueryService();
 
@@ -100,7 +101,7 @@ const getQueryByQueryId = async (req, res) => {
 
 const changeSatus = async (req, res) => {
   try {
-    const queryId = req.params.queryId;
+    const queryId = req.body.queryId;
     const { status } = req.body;
 
     if (!queryId || !status) {
@@ -143,12 +144,17 @@ const changeSatus = async (req, res) => {
 const getQueryBYCityAndDocumentId = async (req, res) => {
   try {
     // console.log("hellow", req.params);
-    const city = req.params.cityName;
-    const documentId = req.params.documentId;
+    // const city = req.params.cityName;
+    // const documentId = req.params.documentId;
     // console.log(city,documentId);
+    // console.log(req.agent);
+    // const id = req.agent.id;
+    // console.log(id);
+    const agent = await Agent.findById(req.agent.id);
+    // console.log("agent "+agent);
     const response = await queryService.getQueryByCityAndDocumentId(
-      city,
-      documentId
+      agent.city,
+      agent.documentId
     );
     // console.log(response);
     if (response.length === 0) {

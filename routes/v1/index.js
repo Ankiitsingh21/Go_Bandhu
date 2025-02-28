@@ -31,10 +31,11 @@ const {
   getStatusOfQuery,
   getQueryBYCityAndDocumentId,
 } = require('../../controller/query-controller.js');
-const { sendOtp, verifyOtp } = require('../../controller/otpController.js');
+const { sendOtp, verifyOtp, verifyAgentOtp } = require('../../controller/otpController.js');
 const {
   addNewAgent,
   agentSignIn,
+  getAgent,
 } = require('../../controller/agent-controller.js');
 const {
   accept,
@@ -55,14 +56,19 @@ router.post('/agentLogin', validateUserAuthLogin, agentSignIn);
 router.post('/changeStatus', verifyAgentToken, changeSatus);
 
 router.get(
-  '/getQueries/city/:cityName/documentId/:documentId',
-  verifyToken,
+  '/getQueries',
+  verifyAgentToken,
   getQueryBYCityAndDocumentId
 );
 
+router.get('/getAgentProfile',verifyAgentToken,getAgent);
+
+
 router.get('/getAlluser', verifyAdminToken, getAll);
 
-router.post('/accept', verifyAgentToken, accept);
+router.post('/accept', verifyAgentToken, 
+  accept
+);
 
 router.post('/reject', verifyAgentToken, reject);
 
@@ -104,6 +110,7 @@ router.get('/getStatusOfQuery/queryId/:queryId', getStatusOfQuery);
 
 router.post('/send-otp', sendOtp);
 router.post('/verify-otp', verifyOtp);
+router.post('/verifyAgent-otp',verifyAgentOtp);
 
 // send otp
 

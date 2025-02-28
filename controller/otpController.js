@@ -2,6 +2,7 @@ const { createClient } = require('redis');
 const axios = require('axios');
 // const Profile = require('../models/profile');
 const User = require('../models/user');
+const Agent = require('../models/agents');
 require('dotenv').config();
 
 const redisConfig = {
@@ -68,17 +69,17 @@ const verifyOtp = async (req, res) => {
   try {
     const { otp, mobileNumber } = req.body;
 
-    if (mobileNumber == '9410695320' && otp == '1234') {
-      // console.log("hello");
-      await User.findOneAndUpdate(
-        { number: mobileNumber },
-        { numberVerified: true }
-      );
-      return res.json({
-        success: true,
-        message: 'OTP verified successfully',
-      });
-    }
+    // if (mobileNumber == '9410695320' && otp == '1234') {
+    //   // console.log("hello");
+    //   await User.findOneAndUpdate(
+    //     { number: mobileNumber },
+    //     { numberVerified: true }
+    //   );
+    //   return res.json({
+    //     success: true,
+    //     message: 'OTP verified successfully',
+    //   });
+    // }
     if (!otp || !mobileNumber) {
       return res.status(400).json({
         success: false,
@@ -124,7 +125,69 @@ const verifyOtp = async (req, res) => {
   }
 };
 
+
+const verifyAgentOtp = async (req, res) => {
+  try {
+    const { otp, mobileNumber } = req.body;
+
+    // if (mobileNumber == '9410695320' && otp == '1234') {
+    //   // console.log("hello");
+    //   await User.findOneAndUpdate(
+    //     { number: mobileNumber },
+    //     { numberVerified: true }
+    //   );
+    //   return res.json({
+    //     success: true,
+    //     message: 'OTP verified successfully',
+    //   });
+    // }
+    if (!otp || !mobileNumber) {
+      return res.status(400).json({
+        success: false,
+        message: 'OTP and mobile number are required',
+      });
+    }
+
+    // Retrieve OTP from Redis
+    const storedOtp = await client.get(mobileNumber);
+
+    if (!storedOtp) {
+      return res.status(400).json({
+        success: false,
+        message: 'OTP not found or expired',
+      });
+    }
+
+    if (storedOtp !== otp) {
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid OTP',
+      });
+    }
+
+    // OTP is valid, delete it from Redis
+    await client.del(mobileNumber);
+
+    const update = await Agent.findOneAndUpdate(
+      { number: mobileNumber },
+      { numberVerified: true }
+    );
+    console.log("hiiii   "+update);
+    res.json({
+      success: true,
+      message: 'OTP verified successfully',
+    });
+  } catch (error) {
+    console.error('Error in verifyOtp:', error);
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
 module.exports = {
   sendOtp,
   verifyOtp,
+  verifyAgentOtp
 };

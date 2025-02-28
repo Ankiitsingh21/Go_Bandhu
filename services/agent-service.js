@@ -16,6 +16,10 @@ class AgentService extends CrudRepository {
       if (!agent) {
         throw new Error('No agent found');
       }
+      // console.log(agent);
+      if (!agent.numberVerified) {
+        throw new Error('Number is not verified');
+      }
       // if (agent.roles == 'Admin') {
       //   console.log('This agent is Admin');
       // }
@@ -28,6 +32,17 @@ class AgentService extends CrudRepository {
     } catch (error) {
       console.log('Something went wrong in the Service Layer');
       throw error;
+    }
+  }
+
+  async createe(data) {
+    try {
+      // console.log("in the seervice layer "+data);
+      const response = await this.agentRepository.createe(data);
+      return response;
+    } catch (error) {
+      console.log('something went wrong on Crud service layer');
+      throw { error };
     }
   }
 
