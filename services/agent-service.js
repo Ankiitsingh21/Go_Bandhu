@@ -39,7 +39,9 @@ class AgentService extends CrudRepository {
     try {
       // console.log("in the seervice layer "+data);
       const response = await this.agentRepository.createe(data);
-      return response;
+      // console.log(response);
+      const token = response.genJWT();
+      return token;
     } catch (error) {
       console.log('something went wrong on Crud service layer');
       throw { error };

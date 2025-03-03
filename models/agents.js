@@ -62,9 +62,9 @@ agentSchema.methods.genJWT = function generate() {
   );
 };
 
-agentSchema.post('init', function(doc) {
-  doc.collection.createIndex({ number: 1 }, { unique: true });
-});
+// agentSchema.post('init', function(doc) {
+//   doc.collection.createIndex({ number: 1 }, { unique: true });
+// });
 
 const Agent = mongoose.model('Agent', agentSchema);
 

@@ -11,6 +11,7 @@ const addNewAgent = async (req, res) => {
     // const Document = await documentService.getById(req.body.documentId);
     const Documentt = await Document.find({_id:req.body.documentId});
     // console.log(Documentt);
+    // console.log(req.body);
     const response = await agentService.createe({
       name: req.body.name,
       number: req.body.number,
@@ -27,12 +28,13 @@ const addNewAgent = async (req, res) => {
     });
   } catch (error) {
     // console.log(error.error.error);
+    // console.log("hii");
     const agent = await Agent.findOne(error.number);
     // console.log(user);
     const token = agent.genJWT();
     if (
       error.error.error ==
-      'User already exists, but the number is not verified.'
+      'Agent already exists, but the number is not verified.'
     ) {
       return res.status(200).json({
         success: 'true',
