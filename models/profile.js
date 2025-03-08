@@ -20,6 +20,14 @@ const profileSchema = new mongoose.Schema(
       required: true,
       unique: true,
     },
+    referedBy: {
+      type: String,
+      default: null,
+    },
+    referalCode: {
+      type: String,
+      default: null,
+    },
   },
   { timestamps: true }
 );

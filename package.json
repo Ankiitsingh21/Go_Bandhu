@@ -24,7 +24,8 @@
     "nanoid": "^5.0.9",
     "node-fetch": "^3.3.2",
     "nodemon": "^3.1.9",
-    "redis": "^4.7.0"
+    "redis": "^4.7.0",
+    "uuid4": "^2.0.3"
   },
   "devDependencies": {
     "prettier": "3.4.2"

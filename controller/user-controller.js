@@ -5,9 +5,11 @@ const userService = new UserService();
 
 const signUp = async (req, res, next) => {
   try {
+    // console.log('In the controller layer ' + req.body.number);
     const user = await userService.signUp({
       number: req.body.number,
     });
+    // console.log(user);
     req.userId = user._id;
     next();
     // return res.status(200).json({

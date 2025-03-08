@@ -1,5 +1,6 @@
 const ProfileRepository = require('../repositories/profile-repository');
 const { UserRepository } = require('../repositories/user-repository');
+const uuid4 = require('uuid4');
 
 class ProfileService {
   constructor() {
@@ -17,6 +18,8 @@ class ProfileService {
         throw new Error('User not found');
       }
 
+      const id = uuid4();
+      // console.log('ID:', id);
       // Access the first user in the array
       const user = users[0];
       // console.log(user);
@@ -24,6 +27,7 @@ class ProfileService {
         {
           userId: user._id,
           number: user.number,
+          referalCode: id,
         },
       ];
       const profile = await this.profileRepository.create(profileData);

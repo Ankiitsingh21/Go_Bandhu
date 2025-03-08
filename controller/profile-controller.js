@@ -4,6 +4,8 @@ const profileService = new ProfileService();
 
 const createProfile = async (req, res) => {
   try {
+    // console.log('In the createProfile controller');
+    // console.log(req.userId);
     const profile = await profileService.createProfileFromUser(req.userId);
     // console.log('Profile:', profile);
     // const token = profile.token;
