@@ -1,13 +1,15 @@
 const { text } = require('body-parser');
 const QueryService = require('../services/query-service');
-const  Agent = require('../models/agents');
+const Agent = require('../models/agents');
+const profile = require('../models/profile');
+const FirebaseNotificationService = require('../services/firebase-NotificationService');
 
 const queryService = new QueryService();
+const firebaseNotificationService = new FirebaseNotificationService();
 
 const raiseProblem = async (req, res) => {
   try {
-    // console.log(req.user);
-    // console.log(req.body);
+    // Create the problem using your existing service
     const response = await queryService.raiseProblem({
       userId: req.user.id,
       documentId: req.body.documentId,
@@ -17,10 +19,28 @@ const raiseProblem = async (req, res) => {
       noOfHours: req.body.noOfhours,
       timing: req.body.timing,
     });
+
+    // console.log(req.user.id);
+    const userId= req.user.id;
+    const Profile = await profile.find({userId});
+    // console.log(Profile[0].city);
+    // Get city information - either from the address in the request or from user data
+    const city = Profile[0].city;
+
+    // Send notifications to agents in the same city with the same documentId
+    const notificationResult = await firebaseNotificationService.notifyAgentsAboutNewProblem(
+      city,
+      req.body.documentId,
+      response
+    );
+
+    console.log('Notification result:', notificationResult);
+
     return res.status(201).json({
       success: true,
       message: 'Query raised successfully',
       data: response,
+      notificationSent: notificationResult.success,
       err: {},
     });
   } catch (error) {
@@ -48,7 +68,7 @@ const getQueryByUserId = async (req, res) => {
     console.error('Error in QueryController:', error);
     return res.status(500).json({
       success: false,
-      message: 'Unable to fetch  Query by userid',
+      message: 'Unable to fetch Query by userid',
       data: {},
       err: error,
     });
@@ -58,7 +78,6 @@ const getQueryByUserId = async (req, res) => {
 const getStatusOfQuery = async (req, res) => {
   try {
     const queryId = req.params.queryId;
-    // console.log(queryId);
     const response = await queryService.getStatusByQueryId(queryId);
     return res.status(201).json({
       success: true,
@@ -70,7 +89,7 @@ const getStatusOfQuery = async (req, res) => {
     console.error('Error in QueryController:', error);
     return res.status(500).json({
       success: false,
-      message: 'Unable to fetch  Status by Queryid',
+      message: 'Unable to fetch Status by Queryid',
       data: {},
       err: error,
     });
@@ -80,7 +99,6 @@ const getStatusOfQuery = async (req, res) => {
 const getQueryByQueryId = async (req, res) => {
   try {
     const queryId = req.params.queryId;
-    // console.log(queryId);
     const response = await queryService.getById(queryId);
     return res.status(201).json({
       success: true,
@@ -92,7 +110,7 @@ const getQueryByQueryId = async (req, res) => {
     console.error('Error in QueryController:', error);
     return res.status(500).json({
       success: false,
-      message: 'Unable to fetch  Query by Queryid',
+      message: 'Unable to fetch Query by Queryid',
       data: {},
       err: error,
     });
@@ -143,20 +161,12 @@ const changeSatus = async (req, res) => {
 
 const getQueryBYCityAndDocumentId = async (req, res) => {
   try {
-    // console.log("hellow", req.params);
-    // const city = req.params.cityName;
-    // const documentId = req.params.documentId;
-    // console.log(city,documentId);
-    // console.log(req.agent);
-    // const id = req.agent.id;
-    // console.log(id);
     const agent = await Agent.findById(req.agent.id);
-    // console.log("agent "+agent);
     const response = await queryService.getQueryByCityAndDocumentId(
       agent.city,
       agent.documentId
     );
-    // console.log(response);
+    
     if (response.length === 0) {
       return res.status(201).json({
         success: true,
@@ -175,7 +185,51 @@ const getQueryBYCityAndDocumentId = async (req, res) => {
     console.error('Error in QueryController:', error);
     return res.status(500).json({
       success: false,
-      message: 'Unable to fetch  Query by city and documentId',
+      message: 'Unable to fetch Query by city and documentId',
+      data: {},
+      err: error,
+    });
+  }
+};
+
+// New method to send test notification
+const sendTestNotification = async (req, res) => {
+  try {
+    const { city, documentId } = req.body;
+    
+    if (!city || !documentId) {
+      return res.status(400).json({
+        success: false,
+        message: 'City and documentId are required',
+        data: {},
+        err: {},
+      });
+    }
+
+    // Dummy problem data for testing
+    const testProblem = {
+      _id: 'test-problem-id',
+      assistanceType: 'Test Assistance',
+      text: 'This is a test notification'
+    };
+
+    const result = await firebaseNotificationService.notifyAgentsAboutNewProblem(
+      city,
+      documentId,
+      testProblem
+    );
+
+    return res.status(200).json({
+      success: true,
+      message: 'Test notification sent',
+      data: result,
+      err: {},
+    });
+  } catch (error) {
+    console.error('Error sending test notification:', error);
+    return res.status(500).json({
+      success: false,
+      message: 'Unable to send test notification',
       data: {},
       err: error,
     });
@@ -189,4 +243,5 @@ module.exports = {
   changeSatus,
   getStatusOfQuery,
   getQueryBYCityAndDocumentId,
+  sendTestNotification, 
 };

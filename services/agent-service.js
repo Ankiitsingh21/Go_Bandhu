@@ -20,6 +20,11 @@ class AgentService extends CrudRepository {
       if (!agent.numberVerified) {
         throw new Error('Number is not verified');
       }
+      const update = await this.agentRepository.findByIdAndUpdate(
+        agent._id,
+        { fcmToken: data.fcmToken },
+        { new: true }
+      );
       // if (agent.roles == 'Admin') {
       //   console.log('This agent is Admin');
       // }

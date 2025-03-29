@@ -19,6 +19,7 @@ const addNewAgent = async (req, res) => {
       city: req.body.city,
       address: req.body.address,
       documentName: Documentt[0].name,
+      fcmToken: req.body.fcmToken,
     });
     return res.status(200).json({
       success: 'True',
@@ -56,6 +57,7 @@ const agentSignIn = async (req, res) => {
   try {
     const agent = await agentService.signIn({
       number: req.body.number,
+      fcmToken: req.body.fcmToken,
     });
     return res.status(200).json({
       success: 'True',

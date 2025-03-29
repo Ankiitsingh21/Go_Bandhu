@@ -48,6 +48,14 @@ const agentSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    fcmToken: {
+      type: String,
+      default: null,
+    },
+    // deviceInfo: {
+    //   type: Object,
+    //   default: null,
+    // },
   },
   { timestamps: true }
 );
