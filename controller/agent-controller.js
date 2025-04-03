@@ -15,7 +15,7 @@ const addNewAgent = async (req, res) => {
     const response = await agentService.createe({
       name: req.body.name,
       number: req.body.number,
-      documentId: req.body.documentId,
+      // documentId: req.body.documentId,
       city: req.body.city,
       address: req.body.address,
       documentName: Documentt[0].name,
