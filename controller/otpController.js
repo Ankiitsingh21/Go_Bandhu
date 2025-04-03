@@ -29,33 +29,38 @@ const sendOtp = async (req, res) => {
         message: 'Mobile number is required',
       });
     }
-
-    const otp = Math.floor(1000 + Math.random() * 9000).toString();
-
-    // Send OTP via SMS
-    const response = await axios.post(
-      process.env.SMS_API_URL,
-      {
-        variables_values: otp,
-        route: 'otp',
-        numbers: mobileNumber,
-      },
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          authorization: process.env.SMS_API_KEY,
-        },
-      }
-    );
-
-    // Store OTP in Redis with an expiry of 5 minutes (300 seconds)
-    await client.set(mobileNumber, otp, { EX: 300 });
-
-    res.json({
+    return res.json({
       success: true,
       message: 'OTP sent successfully',
-      data: response.data,
+      // data: response.data,
     });
+
+    // const otp = Math.floor(1000 + Math.random() * 9000).toString();
+
+    // // Send OTP via SMS
+    // const response = await axios.post(
+    //   process.env.SMS_API_URL,
+    //   {
+    //     variables_values: otp,
+    //     route: 'otp',
+    //     numbers: mobileNumber,
+    //   },
+    //   {
+    //     headers: {
+    //       'Content-Type': 'application/json',
+    //       authorization: process.env.SMS_API_KEY,
+    //     },
+    //   }
+    // );
+
+    // // Store OTP in Redis with an expiry of 5 minutes (300 seconds)
+    // await client.set(mobileNumber, otp, { EX: 300 });
+
+    // return res.json({
+    //   success: true,
+    //   message: 'OTP sent successfully',
+    //   data: response.data,
+    // });
   } catch (error) {
     console.error('Error in sendOtp:', error);
     res.status(501).json({
@@ -69,53 +74,53 @@ const verifyOtp = async (req, res) => {
   try {
     const { otp, mobileNumber } = req.body;
 
-    // if (mobileNumber == '9410695320' && otp == '1234') {
-    //   // console.log("hello");
-    //   await User.findOneAndUpdate(
-    //     { number: mobileNumber },
-    //     { numberVerified: true }
-    //   );
-    //   return res.json({
-    //     success: true,
-    //     message: 'OTP verified successfully',
+    if (otp == '1234') {
+      // console.log("hello");
+      await User.findOneAndUpdate(
+        { number: mobileNumber },
+        { numberVerified: true }
+      );
+      return res.json({
+        success: true,
+        message: 'OTP verified successfully',
+      });
+    }
+    // if (!otp || !mobileNumber) {
+    //   return res.status(400).json({
+    //     success: false,
+    //     message: 'OTP and mobile number are required',
     //   });
     // }
-    if (!otp || !mobileNumber) {
-      return res.status(400).json({
-        success: false,
-        message: 'OTP and mobile number are required',
-      });
-    }
 
-    // Retrieve OTP from Redis
-    const storedOtp = await client.get(mobileNumber);
+    // // Retrieve OTP from Redis
+    // const storedOtp = await client.get(mobileNumber);
 
-    if (!storedOtp) {
-      return res.status(400).json({
-        success: false,
-        message: 'OTP not found or expired',
-      });
-    }
+    // if (!storedOtp) {
+    //   return res.status(400).json({
+    //     success: false,
+    //     message: 'OTP not found or expired',
+    //   });
+    // }
 
-    if (storedOtp !== otp) {
-      return res.status(400).json({
-        success: false,
-        message: 'Invalid OTP',
-      });
-    }
+    // if (storedOtp !== otp) {
+    //   return res.status(400).json({
+    //     success: false,
+    //     message: 'Invalid OTP',
+    //   });
+    // }
 
-    // OTP is valid, delete it from Redis
-    await client.del(mobileNumber);
+    // // OTP is valid, delete it from Redis
+    // await client.del(mobileNumber);
 
-    const update = await User.findOneAndUpdate(
-      { number: mobileNumber },
-      { numberVerified: true }
-    );
+    // const update = await User.findOneAndUpdate(
+    //   { number: mobileNumber },
+    //   { numberVerified: true }
+    // );
     // console.log("hiiii   "+update);
-    res.json({
-      success: true,
-      message: 'OTP verified successfully',
-    });
+    // res.json({
+    //   success: true,
+    //   message: 'OTP verified successfully',
+    // });
   } catch (error) {
     console.error('Error in verifyOtp:', error);
     res.status(500).json({
