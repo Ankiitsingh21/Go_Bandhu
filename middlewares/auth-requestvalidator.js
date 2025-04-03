@@ -31,7 +31,7 @@ const validateAgentAuth = (req, res, next) => {
   if (
     !req.body.number ||
     !req.body.name ||
-    !req.body.documentId ||
+    // !req.body.documentId ||
     !req.body.city ||
     !req.body.address
   ) {
