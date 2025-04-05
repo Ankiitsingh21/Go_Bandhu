@@ -9,7 +9,7 @@ const agentService = new AgentService();
 const addNewAgent = async (req, res) => {
   try {
     // const Document = await documentService.getById(req.body.documentId);
-    const Documentt = await Document.find({_id:req.body.documentId});
+    // const Documentt = await Document.find({_id:req.body.documentId});
     // console.log(Documentt);
     // console.log(req.body);
     const response = await agentService.createe({
@@ -18,7 +18,7 @@ const addNewAgent = async (req, res) => {
       // documentId: req.body.documentId,
       city: req.body.city,
       address: req.body.address,
-      documentName: Documentt[0].name,
+      // documentName: Documentt[0].name,
       fcmToken: req.body.fcmToken,
     });
     return res.status(200).json({
@@ -28,7 +28,7 @@ const addNewAgent = async (req, res) => {
       err: {},
     });
   } catch (error) {
-    // console.log(error.error.error);
+    console.log(error.error.error);
     // console.log("hii");
     const agent = await Agent.findOne(error.number);
     // console.log(user);

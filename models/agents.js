@@ -25,7 +25,7 @@ const agentSchema = new mongoose.Schema(
     },
     documentName: {
       type: String,
-      required: true,
+      // required: true,
     },
     status: {
       type: String,
