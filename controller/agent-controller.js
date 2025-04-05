@@ -62,7 +62,7 @@ const agentSignIn = async (req, res) => {
     return res.status(200).json({
       success: 'True',
       message: 'Succesfully Login',
-      data: agent,
+      token: agent,
       err: {},
     });
   } catch (error) {
@@ -83,11 +83,11 @@ const getAgent = async(req,res)=>{
     // const agent = await agentService.findByA(req.agent.id);
     const agentID=req.agent.id;
     const agent = await Agent.find({ _id: agentID });
-    // console.log(agent);
+    // console.log(agent[0]);
     return res.status(200).json({
       success: 'True',
-      message: 'Succesfully Login',
-      data: agent,
+      message: 'Succesfully fetched the agent',
+      data: agent[0],
       err: {},
     });
   } catch (error) {

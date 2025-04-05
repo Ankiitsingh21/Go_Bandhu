@@ -47,6 +47,7 @@ const validateAgentAuth = (req, res, next) => {
 
 const verifyToken = async (req, res, next) => {
   const token = req.headers['x-access-token'];
+  // console.log(token);
   if (!token) {
     return res.status(401).json({
       success: false,
@@ -66,6 +67,15 @@ const verifyToken = async (req, res, next) => {
         data: {},
         message: 'Number is not verified',
         err: 'Unauthorized access',
+      });
+    }
+
+    if(user.status !== 'ACTIVE'){
+      return res.status(403).json({
+        success: false,
+        data: {},
+        message: 'User is not active!! Contact to Admin',
+        err: 'Inactive user',
       });
     }
     req.user = response;

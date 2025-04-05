@@ -5,6 +5,7 @@ const {
   signUp,
   signIn,
   getAll,
+  deactivate,
 } = require('../../controller/user-controller.js');
 const {
   validateUserAuth,
@@ -107,6 +108,8 @@ router.get('/fetchQueryByUserId', verifyToken, getQueryByUserId);
 router.get('/fetchQueryByQueryId/queryId/:queryId', getQueryByQueryId);
 
 router.get('/getStatusOfQuery/queryId/:queryId', getStatusOfQuery);
+
+router.post('/deactivateUser',verifyToken,deactivate);
 
 router.post('/send-otp', sendOtp);
 router.post('/verify-otp', verifyOtp);

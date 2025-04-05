@@ -116,8 +116,57 @@ const isAdmin = async (req, res) => {
   }
 };
 
+const deactivate = async (req, res) => {
+  try {
+    const userID = req.user.id;
+    console.log(userID);
+    const user = await User.findByIdAndUpdate(
+      userID,
+      { status: "INACTIVE" },  
+      { new: true }
+    );
+    console.log(user);
+    // const response = await userService.deactivate(req.body.userId);
+    return res.status(201).json({
+      data: user,
+      success: true,
+      err: {},
+      message: 'Successfully deactivated user',
+    });
+  } catch (error) {
+    // console.log(error);
+    return res.status(500).json({
+      message: 'NOT able to deactivate user', 
+      data: {},
+      success: false,
+      err: error,
+    });
+  }
+};
+
+// const activate = async (req, res) => {
+//   try {
+//     const response = await userService.activate(req.body.userId);
+//     return res.status(201).json({
+//       data: response,
+//       success: true,
+//       err: {},
+//       message: 'Successfully activated user',
+//     });
+//   } catch (error) {
+//     // console.log(error);
+//     return res.status(500).json({
+//       message: 'user is not a admin',
+//       data: {},
+//       success: false,
+//       err: error,
+//     });
+//   }
+// };
+
 module.exports = {
   signUp,
   signIn,
   getAll,
+  deactivate,
 };
