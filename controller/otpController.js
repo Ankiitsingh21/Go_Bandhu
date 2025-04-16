@@ -76,10 +76,22 @@ const verifyOtp = async (req, res) => {
 
     if (otp == '1234') {
       // console.log("hello");
-      await User.findOneAndUpdate(
+      const user = await User.findOneAndUpdate(
         { number: mobileNumber },
-        { numberVerified: true }
+        { numberVerified: true },{
+          new:true
+        }
       );
+      // console.log(user);
+      if(!user){
+        const agent = await Agent.findOneAndUpdate(
+          { number: mobileNumber },
+          { numberVerified: true },{
+            new:true
+          }
+        );
+        // console.log(agent);
+      }
       return res.json({
         success: true,
         message: 'OTP verified successfully',

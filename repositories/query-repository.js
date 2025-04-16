@@ -31,14 +31,20 @@ class QueryRepository extends CrudRepository {
     }
   }
 
-  async getQueryByCityAndDocumentId(city, documentId) {
+  async getQueryByCityAndDocumentId(city, documentId,documentId2) {
     try {
       // console.log(city,documentId);
+      // console.log(documentId2);
       const query = { status: 'Submitted' };
       // const query= {};
       if (city) query.city = new RegExp(`^${city}$`, 'i');
-      if (documentId) query.documentId = { $in: [documentId] };
-      // console.log("passing query = ",query);
+      const documentId2Array = Array.isArray(documentId2) ? documentId2 : [documentId2];
+
+    query.$or = [
+      { documentId: { $in: documentId } },
+      { documentId2: { $in: documentId2Array } }
+    ];
+      console.log("passing query = ",query);
       const result = await Query.find(query);
       // console.log("result = ",result);
       return result;

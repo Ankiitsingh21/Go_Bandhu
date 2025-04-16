@@ -30,7 +30,7 @@ const raiseProblem = async (req, res) => {
     // Send notifications to agents in the same city with the same documentId
     const notificationResult = await firebaseNotificationService.notifyAgentsAboutNewProblem(
       city,
-      req.body.documentId,
+      // req.body.documentId,
       response
     );
 
@@ -162,9 +162,11 @@ const changeSatus = async (req, res) => {
 const getQueryBYCityAndDocumentId = async (req, res) => {
   try {
     const agent = await Agent.findById(req.agent.id);
+    // console.log(agent.documentId2);
     const response = await queryService.getQueryByCityAndDocumentId(
       agent.city,
-      agent.documentId
+      agent.documentId,
+      agent.documentId2
     );
     
     if (response.length === 0) {

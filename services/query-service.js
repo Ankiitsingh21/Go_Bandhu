@@ -85,12 +85,13 @@ class QueryService extends CrudService {
     }
   }
 
-  async getQueryByCityAndDocumentId(city, documentId) {
+  async getQueryByCityAndDocumentId(city, documentId,documentId2) {
     try {
       // console.log(city,documentId);
       const response = await this.queryRepository.getQueryByCityAndDocumentId(
         city,
-        documentId
+        documentId,
+        documentId2
       );
       return response;
     } catch (error) {

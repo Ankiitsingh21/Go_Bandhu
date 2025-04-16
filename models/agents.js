@@ -17,15 +17,25 @@ const agentSchema = new mongoose.Schema(
     documentId: {
       type: [mongoose.Schema.Types.ObjectId],
       ref: 'Document',
-      // required: true,
+      required: true,
     },
+    documentId2: {
+      type: [mongoose.Schema.Types.ObjectId],
+      ref: 'Document',
+      validate: {
+        validator: function (val) {
+          return Array.isArray(val) && val.length <= 3;
+        },
+        message: 'documentId2 can have at most 3 items.'
+      }
+    },    
     city: {
       type: String,
       required: true,
     },
     documentName: {
       type: String,
-      // required: true,
+      required: true,
     },
     status: {
       type: String,

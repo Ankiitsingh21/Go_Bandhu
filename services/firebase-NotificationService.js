@@ -27,23 +27,21 @@ class FirebaseNotificationService {
       console.log('No tokens provided for notification');
       return { successCount: 0, failureCount: 0 };
     }
-
-    // Filter out any empty tokens
+  
     const validTokens = tokens.filter(token => token && token.trim() !== '');
-    
+  
     if (validTokens.length === 0) {
       console.log('No valid tokens after filtering');
       return { successCount: 0, failureCount: 0 };
     }
-
+  
     try {
-      const message = {
+      const response = await admin.messaging().sendEachForMulticast({
+        tokens: validTokens,
         notification,
         data,
-        tokens: validTokens
-      };
-
-      const response = await admin.messaging().sendMulticast(message);
+      });
+  
       console.log(`Successfully sent message: ${response.successCount} successful, ${response.failureCount} failed`);
       return response;
     } catch (error) {
@@ -51,21 +49,21 @@ class FirebaseNotificationService {
       throw error;
     }
   }
-
+  
   /**
    * Get all FCM tokens for agents in a specific city and with a specific documentId
    * @param {String} city - City name
    * @param {String} documentId - Document ID
    * @returns {Promise<Array>} Array of FCM tokens
    */
-  async getAgentTokensByCityAndDocumentId(city, documentId) {
+  async getAgentTokensByCityAndDocumentId(city) {
     try {
       const agents = await Agent.find({ 
         city, 
-        documentId,
+        // documentId,
         fcmToken: { $exists: true, $ne: '' } 
       });
-      
+      // console.log(agents);
       return agents.map(agent => agent.fcmToken);
     } catch (error) {
       console.error('Error fetching agent tokens:', error);
@@ -80,9 +78,9 @@ class FirebaseNotificationService {
    * @param {Object} problemData - Problem details
    * @returns {Promise} Notification result
    */
-  async notifyAgentsAboutNewProblem(city, documentId, problemData) {
+  async notifyAgentsAboutNewProblem(city, problemData) {
     try {
-      const tokens = await this.getAgentTokensByCityAndDocumentId(city, documentId);
+      const tokens = await this.getAgentTokensByCityAndDocumentId(city);
       
       if (tokens.length === 0) {
         console.log(`No agents found in ${city} for document ${documentId}`);
@@ -98,7 +96,7 @@ class FirebaseNotificationService {
         type: 'NEW_PROBLEM',
         problemId: problemData._id.toString(),
         city: city,
-        documentId: documentId,
+        // documentId: documentId,
         timestamp: Date.now().toString(),
         assistanceType: problemData.assistanceType || '',
         // Add other non-sensitive fields as needed

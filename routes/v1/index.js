@@ -109,7 +109,7 @@ router.get('/fetchQueryByQueryId/queryId/:queryId', getQueryByQueryId);
 
 router.get('/getStatusOfQuery/queryId/:queryId', getStatusOfQuery);
 
-router.post('/deactivateUser',verifyToken,deactivate);
+router.delete('/deactivateUser',verifyToken,deactivate);
 
 router.post('/send-otp', sendOtp);
 router.post('/verify-otp', verifyOtp);

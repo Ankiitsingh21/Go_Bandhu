@@ -173,31 +173,31 @@ const verifyAgentToken = async (req, res, next) => {
     const response = jwt.verify(token, JWT_KEY);
     // console.log(response);
     // req.user = response;
-    if (response.role !== 'agent') {
-      return res.status(401).json({
-        success: false,
-        data: {},
-        message: 'You are not authorized to access this route',
-        err: 'Unauthorized access',
-      });
-    }
+    // if (response.role !== 'agent') {
+    //   return res.status(401).json({
+    //     success: false,
+    //     data: {},
+    //     message: 'You are not authorized to access this route',
+    //     err: 'Unauthorized access',
+    //   });
+    // }
 
     const agent = await Agent.findById(response.id);
     // console.log(agent);
-    // if(!agent.numberVerified){
-    //   return res.status(501).json({
-    //     success:false,
-    //     data:{},
-    //     message:'Number is not verified',
-    //     err: 'Number is not verified',
-    //   })
-    // }
     if(!agent){
       return res.status(404).json({
         success: false,
         data: {},
         message: 'No Agent Found',
         err: 'No Agent Found',
+      })
+    }
+    if(!agent.numberVerified){
+      return res.status(501).json({
+        success:false,
+        data:{},
+        message:'Number is not verified',
+        err: 'Number is not verified',
       })
     }
     if (agent.status !== 'Active') {
