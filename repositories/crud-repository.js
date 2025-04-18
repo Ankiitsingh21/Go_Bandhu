@@ -56,7 +56,7 @@ class CrudRepository {
 
   async getAll(filters = {}) {
     try {
-      console.log('Using model in getAll:', this.model);
+      // console.log('Using model in getAll:', this.model);
       const result = await this.model.find(filters);
       return result;
     } catch (error) {
@@ -67,7 +67,7 @@ class CrudRepository {
 
   async findById(id) {
     try {
-      console.log(id);
+      // console.log(id);
       const result = await this.model.find(id);
       // console.log(result);
       return result;

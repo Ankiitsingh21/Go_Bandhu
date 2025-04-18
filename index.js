@@ -11,7 +11,7 @@ app.use('/api', apiRoutes);
 
 // app.post('/createuserinuserTableAndProfile',signUp,createProfile);
 app.listen(PORT, async () => {
-  console.log(`Server Started on ${PORT}`);
+  console.log(`Server Started`);
   await connect();
 
   console.log('MongoDb is connected');

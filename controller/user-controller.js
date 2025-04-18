@@ -119,13 +119,13 @@ const isAdmin = async (req, res) => {
 const deactivate = async (req, res) => {
   try {
     const userID = req.user.id;
-    console.log(userID);
+    // console.log(userID);
     const user = await User.findByIdAndUpdate(
       userID,
       { status: "INACTIVE" },  
       { new: true }
     );
-    console.log(user);
+    // console.log(user);
     // const response = await userService.deactivate(req.body.userId);
     return res.status(201).json({
       data: user,
