@@ -31,6 +31,7 @@ const {
   changeSatus,
   getStatusOfQuery,
   getQueryBYCityAndDocumentId,
+  sendTestNotification,
 } = require('../../controller/query-controller.js');
 const { sendOtp, verifyOtp, verifyAgentOtp } = require('../../controller/otpController.js');
 const {
@@ -118,4 +119,8 @@ router.post('/verifyAgent-otp',verifyAgentOtp);
 // send otp
 
 // verify otp
+
+
+
+router.post('/sendTestNotification', sendTestNotification);
 module.exports = router;

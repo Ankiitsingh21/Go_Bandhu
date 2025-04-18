@@ -197,9 +197,9 @@ const getQueryBYCityAndDocumentId = async (req, res) => {
 // New method to send test notification
 const sendTestNotification = async (req, res) => {
   try {
-    const { city, documentId } = req.body;
+    const { city } = req.body;
     
-    if (!city || !documentId) {
+    if (!city) {
       return res.status(400).json({
         success: false,
         message: 'City and documentId are required',
@@ -217,7 +217,7 @@ const sendTestNotification = async (req, res) => {
 
     const result = await firebaseNotificationService.notifyAgentsAboutNewProblem(
       city,
-      documentId,
+      // documentId,
       testProblem
     );
 

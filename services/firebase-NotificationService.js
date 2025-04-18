@@ -30,6 +30,7 @@ class FirebaseNotificationService {
   
     const validTokens = tokens.filter(token => token && token.trim() !== '');
   
+    // console.log(`Valid tokens: ${validTokens.length}`, validTokens);
     if (validTokens.length === 0) {
       console.log('No valid tokens after filtering');
       return { successCount: 0, failureCount: 0 };
@@ -50,12 +51,12 @@ class FirebaseNotificationService {
     }
   }
   
-  /**
-   * Get all FCM tokens for agents in a specific city and with a specific documentId
-   * @param {String} city - City name
-   * @param {String} documentId - Document ID
-   * @returns {Promise<Array>} Array of FCM tokens
-   */
+  // /**
+  //  * Get all FCM tokens for agents in a specific city and with a specific documentId
+  //  * @param {String} city - City name
+  //  * @param {String} documentId - Document ID
+  //  * @returns {Promise<Array>} Array of FCM tokens
+  //  */
   async getAgentTokensByCityAndDocumentId(city) {
     try {
       const agents = await Agent.find({ 
@@ -81,9 +82,9 @@ class FirebaseNotificationService {
   async notifyAgentsAboutNewProblem(city, problemData) {
     try {
       const tokens = await this.getAgentTokensByCityAndDocumentId(city);
-      
+      // console.log(tokens);
       if (tokens.length === 0) {
-        console.log(`No agents found in ${city} for document ${documentId}`);
+        console.log(`No agents found in ${city}`);
         return { success: false, message: 'No agents to notify' };
       }
 
