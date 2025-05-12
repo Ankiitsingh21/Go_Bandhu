@@ -183,7 +183,7 @@ const verifyAgentToken = async (req, res, next) => {
     // }
 
     const agent = await Agent.findById(response.id);
-    // console.log(agent);
+    // console.log(agent.number);
     if(!agent){
       return res.status(404).json({
         success: false,

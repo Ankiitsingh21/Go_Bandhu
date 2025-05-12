@@ -1,3 +1,4 @@
+const Agent = require('../models/agents');
 const ProblemSolvingService = require('../services/problemSolving-service');
 const QueryService = require('../services/query-service');
 
@@ -19,6 +20,13 @@ const accept = async (req, res) => {
     const status = 'InProgress';
     await queryService.update(req.body.QueryId, { status });
     // console.log(resp);
+    // const agent = await Agent.findById(AgentId);
+    await Agent.findByIdAndUpdate(AgentId, {
+      $inc: {
+        callsAccepted: 1,
+        callsPending: 1,
+      },
+    });
     return res.status(201).json({
       success: true,
       message: 'ProblemSolving accepted successfully',

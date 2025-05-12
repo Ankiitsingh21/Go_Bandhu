@@ -132,7 +132,21 @@ const changeSatus = async (req, res) => {
     }
 
     const response = await queryService.update(queryId, { status });
+    // console.log(response);
 
+    if(status === 'Resolved'){
+      const agentId = req.agent.id;
+      await Agent.findByIdAndUpdate(
+        agentId,
+        {
+          $inc: {
+            callsResolved: 1,
+            callsPending: -1,
+          },
+        },
+        { new: true }
+      );
+    }
     if (!response) {
       return res.status(404).json({
         success: false,

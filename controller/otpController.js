@@ -73,7 +73,7 @@ const sendOtp = async (req, res) => {
 const verifyOtp = async (req, res) => {
   try {
     const { otp, mobileNumber } = req.body;
-
+    // console.log(mobileNumber);
     if (otp == '1234') {
       // console.log("hello");
       const user = await User.findOneAndUpdate(

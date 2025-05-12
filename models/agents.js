@@ -66,6 +66,18 @@ const agentSchema = new mongoose.Schema(
     //   type: Object,
     //   default: null,
     // },
+    callsAccepted: {
+      type: Number,
+      default: 0,
+    },
+    callsResolved: {
+      type: Number,
+      default: 0,
+    },
+    callsPending: {
+      type: Number,
+      default: 0,
+    },
   },
   { timestamps: true }
 );
