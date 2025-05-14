@@ -10,7 +10,7 @@ const addNewAgent = async (req, res) => {
   try {
     // console.log(req.body);
     // const Document = await documentService.getById(req.body.documentId);
-    const Documentt = await Document.find({_id:req.body.documentId});
+    const Documentt = await Document.find({ _id: req.body.documentId });
     // console.log(Documentt);
     const response = await agentService.createe({
       name: req.body.name,
@@ -77,12 +77,12 @@ const agentSignIn = async (req, res) => {
   }
 };
 
-const getAgent = async(req,res)=>{
+const getAgent = async (req, res) => {
   try {
     // console.log(req.agent.id);
     // const agent = await agentService.getById(req.agent.id);
     // const agent = await agentService.findByA(req.agent.id);
-    const agentID=req.agent.id;
+    const agentID = req.agent.id;
     const agent = await Agent.find({ _id: agentID });
     // console.log(agent[0]);
     return res.status(200).json({
@@ -100,7 +100,7 @@ const getAgent = async(req,res)=>{
       err: error.message,
     });
   }
-}
+};
 
 module.exports = {
   addNewAgent,

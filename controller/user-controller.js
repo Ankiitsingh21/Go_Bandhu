@@ -122,7 +122,7 @@ const deactivate = async (req, res) => {
     // console.log(userID);
     const user = await User.findByIdAndUpdate(
       userID,
-      { status: "INACTIVE" },  
+      { status: 'INACTIVE' },
       { new: true }
     );
     // console.log(user);
@@ -136,7 +136,7 @@ const deactivate = async (req, res) => {
   } catch (error) {
     // console.log(error);
     return res.status(500).json({
-      message: 'NOT able to deactivate user', 
+      message: 'NOT able to deactivate user',
       data: {},
       success: false,
       err: error,

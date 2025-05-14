@@ -78,16 +78,18 @@ const verifyOtp = async (req, res) => {
       // console.log("hello");
       const user = await User.findOneAndUpdate(
         { number: mobileNumber },
-        { numberVerified: true },{
-          new:true
+        { numberVerified: true },
+        {
+          new: true,
         }
       );
       // console.log(user);
-      if(!user){
+      if (!user) {
         const agent = await Agent.findOneAndUpdate(
           { number: mobileNumber },
-          { numberVerified: true },{
-            new:true
+          { numberVerified: true },
+          {
+            new: true,
           }
         );
         // console.log(agent);
@@ -142,7 +144,6 @@ const verifyOtp = async (req, res) => {
   }
 };
 
-
 const verifyAgentOtp = async (req, res) => {
   try {
     const { otp, mobileNumber } = req.body;
@@ -189,7 +190,7 @@ const verifyAgentOtp = async (req, res) => {
       { number: mobileNumber },
       { numberVerified: true }
     );
-    console.log("hiiii   "+update);
+    console.log('hiiii   ' + update);
     res.json({
       success: true,
       message: 'OTP verified successfully',
@@ -206,5 +207,5 @@ const verifyAgentOtp = async (req, res) => {
 module.exports = {
   sendOtp,
   verifyOtp,
-  verifyAgentOtp
+  verifyAgentOtp,
 };

@@ -8,9 +8,9 @@ class FirebaseNotificationService {
     if (!admin.apps.length) {
       // You need to get this service account key from Firebase console
       const serviceAccount = require('../config/serviceAccountKey.json');
-      
+
       admin.initializeApp({
-        credential: admin.credential.cert(serviceAccount)
+        credential: admin.credential.cert(serviceAccount),
       });
     }
   }
@@ -27,30 +27,32 @@ class FirebaseNotificationService {
       console.log('No tokens provided for notification');
       return { successCount: 0, failureCount: 0 };
     }
-  
-    const validTokens = tokens.filter(token => token && token.trim() !== '');
-  
+
+    const validTokens = tokens.filter((token) => token && token.trim() !== '');
+
     // console.log(`Valid tokens: ${validTokens.length}`, validTokens);
     if (validTokens.length === 0) {
       console.log('No valid tokens after filtering');
       return { successCount: 0, failureCount: 0 };
     }
-  
+
     try {
       const response = await admin.messaging().sendEachForMulticast({
         tokens: validTokens,
         notification,
         data,
       });
-  
-      console.log(`Successfully sent message: ${response.successCount} successful, ${response.failureCount} failed`);
+
+      console.log(
+        `Successfully sent message: ${response.successCount} successful, ${response.failureCount} failed`
+      );
       return response;
     } catch (error) {
       console.error('Error sending notification:', error);
       throw error;
     }
   }
-  
+
   // /**
   //  * Get all FCM tokens for agents in a specific city and with a specific documentId
   //  * @param {String} city - City name
@@ -59,13 +61,13 @@ class FirebaseNotificationService {
   //  */
   async getAgentTokensByCityAndDocumentId(city) {
     try {
-      const agents = await Agent.find({ 
-        city, 
+      const agents = await Agent.find({
+        city,
         // documentId,
-        fcmToken: { $exists: true, $ne: '' } 
+        fcmToken: { $exists: true, $ne: '' },
       });
       // console.log(agents);
-      return agents.map(agent => agent.fcmToken);
+      return agents.map((agent) => agent.fcmToken);
     } catch (error) {
       console.error('Error fetching agent tokens:', error);
       throw error;
@@ -90,7 +92,7 @@ class FirebaseNotificationService {
 
       const notification = {
         title: 'New Problem Request',
-        body: `A new problem has been raised in ${city}`
+        body: `A new problem has been raised in ${city}`,
       };
 
       const data = {
@@ -103,11 +105,15 @@ class FirebaseNotificationService {
         // Add other non-sensitive fields as needed
       };
 
-      const result = await this.sendToMultipleDevices(tokens, notification, data);
+      const result = await this.sendToMultipleDevices(
+        tokens,
+        notification,
+        data
+      );
       return {
         success: true,
         notifiedCount: result.successCount,
-        failedCount: result.failureCount
+        failedCount: result.failureCount,
       };
     } catch (error) {
       console.error('Error notifying agents:', error);

@@ -70,7 +70,7 @@ const verifyToken = async (req, res, next) => {
       });
     }
 
-    if(user.status !== 'ACTIVE'){
+    if (user.status !== 'ACTIVE') {
       return res.status(403).json({
         success: false,
         data: {},
@@ -184,21 +184,21 @@ const verifyAgentToken = async (req, res, next) => {
 
     const agent = await Agent.findById(response.id);
     // console.log(agent.number);
-    if(!agent){
+    if (!agent) {
       return res.status(404).json({
         success: false,
         data: {},
         message: 'No Agent Found',
         err: 'No Agent Found',
-      })
+      });
     }
-    if(!agent.numberVerified){
+    if (!agent.numberVerified) {
       return res.status(501).json({
-        success:false,
-        data:{},
-        message:'Number is not verified',
+        success: false,
+        data: {},
+        message: 'Number is not verified',
         err: 'Number is not verified',
-      })
+      });
     }
     if (agent.status !== 'Active') {
       return res.status(403).json({

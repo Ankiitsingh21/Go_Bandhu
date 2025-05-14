@@ -12,7 +12,7 @@ const agentSchema = new mongoose.Schema(
     number: {
       type: Number,
       required: true,
-      unique:true
+      unique: true,
     },
     documentId: {
       type: [mongoose.Schema.Types.ObjectId],
@@ -26,9 +26,9 @@ const agentSchema = new mongoose.Schema(
         validator: function (val) {
           return Array.isArray(val) && val.length <= 3;
         },
-        message: 'documentId2 can have at most 3 items.'
-      }
-    },    
+        message: 'documentId2 can have at most 3 items.',
+      },
+    },
     city: {
       type: String,
       required: true,

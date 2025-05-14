@@ -31,7 +31,7 @@ class QueryRepository extends CrudRepository {
     }
   }
 
-  async getQueryByCityAndDocumentId(city, documentId,documentId2) {
+  async getQueryByCityAndDocumentId(city, documentId, documentId2) {
     try {
       // console.log(city,documentId);
       // console.log(documentId2);
@@ -41,15 +41,15 @@ class QueryRepository extends CrudRepository {
       // const documentId2Array = Array.isArray(documentId2) ? documentId2 : [documentId2];
 
       query.$or = [
-        { 'documentId': documentId } // documentId is not an array
+        { documentId: documentId }, // documentId is not an array
       ];
-      
+
       // If documentId2 is provided and not empty, add it to the $or condition
       if (documentId2 && documentId2.length > 0) {
         // documentId2 is an array, so use $in to match any of its elements
-        query.$or.push({ 'documentId': { $in: documentId2 } });
+        query.$or.push({ documentId: { $in: documentId2 } });
       }
-      
+
       // console.log("passing query = ", query);
       const result = await Query.find(query);
       // console.log("result = ",result);

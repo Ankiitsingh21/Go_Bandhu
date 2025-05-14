@@ -21,18 +21,19 @@ const raiseProblem = async (req, res) => {
     });
 
     // console.log(req.user.id);
-    const userId= req.user.id;
-    const Profile = await profile.find({userId});
+    const userId = req.user.id;
+    const Profile = await profile.find({ userId });
     // console.log(Profile[0].city);
     // Get city information - either from the address in the request or from user data
     const city = Profile[0].city;
 
     // Send notifications to agents in the same city with the same documentId
-    const notificationResult = await firebaseNotificationService.notifyAgentsAboutNewProblem(
-      city,
-      // req.body.documentId,
-      response
-    );
+    const notificationResult =
+      await firebaseNotificationService.notifyAgentsAboutNewProblem(
+        city,
+        // req.body.documentId,
+        response
+      );
 
     console.log('Notification result:', notificationResult);
 
@@ -134,7 +135,7 @@ const changeSatus = async (req, res) => {
     const response = await queryService.update(queryId, { status });
     // console.log(response);
 
-    if(status === 'Resolved'){
+    if (status === 'Resolved') {
       const agentId = req.agent.id;
       await Agent.findByIdAndUpdate(
         agentId,
@@ -182,7 +183,7 @@ const getQueryBYCityAndDocumentId = async (req, res) => {
       agent.documentId,
       agent.documentId2
     );
-    
+
     if (response.length === 0) {
       return res.status(201).json({
         success: true,
@@ -212,7 +213,7 @@ const getQueryBYCityAndDocumentId = async (req, res) => {
 const sendTestNotification = async (req, res) => {
   try {
     const { city } = req.body;
-    
+
     if (!city) {
       return res.status(400).json({
         success: false,
@@ -226,14 +227,15 @@ const sendTestNotification = async (req, res) => {
     const testProblem = {
       _id: 'test-problem-id',
       assistanceType: 'Test Assistance',
-      text: 'This is a test notification'
+      text: 'This is a test notification',
     };
 
-    const result = await firebaseNotificationService.notifyAgentsAboutNewProblem(
-      city,
-      // documentId,
-      testProblem
-    );
+    const result =
+      await firebaseNotificationService.notifyAgentsAboutNewProblem(
+        city,
+        // documentId,
+        testProblem
+      );
 
     return res.status(200).json({
       success: true,
@@ -259,5 +261,5 @@ module.exports = {
   changeSatus,
   getStatusOfQuery,
   getQueryBYCityAndDocumentId,
-  sendTestNotification, 
+  sendTestNotification,
 };

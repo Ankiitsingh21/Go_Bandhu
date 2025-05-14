@@ -46,15 +46,15 @@ const accept = async (req, res) => {
 
 const reject = async (req, res) => {
   try {
-    const  QueryId  = req.body.QueryId;
-    const AgentId= req.agent.id;
+    const QueryId = req.body.QueryId;
+    const AgentId = req.agent.id;
     // console.log(QueryId,AgentId);
     const existingQuery = await problemSolvingService.getAll({
       QueryId,
-      AgentId
+      AgentId,
       // AgentId,
     });
-    const existingQueryy= existingQuery[0];
+    const existingQueryy = existingQuery[0];
     // console.log(existingQuery[0]);
     if (existingQueryy && existingQueryy.status === 'accepted') {
       await problemSolvingService.delete(existingQuery._id);
